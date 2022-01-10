@@ -56,10 +56,11 @@ public class Tree implements Iterable<String>{
                 }
                 String nazwa = current.getNazwa();
                 if (current.getChildren() != null) {
-                    currents = current.getChildren();
-                    for (Dzial i : currents) {
-                        nazwa = i.getNazwa();
-                        return nazwa;
+                    while ((currents = current.getChildren()) != null) {
+                        for (Dzial i : currents) {
+                            nazwa = i.getNazwa();
+                            return nazwa;
+                        }
                     }
                 }
                 return nazwa;

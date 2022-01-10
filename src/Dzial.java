@@ -7,7 +7,7 @@ public class Dzial {
     private double dolnyZakres;
     private double gornyZakres;
     private Dzial parent = null;
-    private List<Dzial> children = new ArrayList<>();
+    private List<Dzial> children = null;
 
     public Dzial(String nazwa) {//, double dolnyZakres, double gornyZakres) {
         this.nazwa = nazwa;
