@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Biblioteka {
@@ -18,7 +19,13 @@ public class Biblioteka {
         tree.dodajDzial("Kryminalne");
         tree.dodajDzial("naukowe");
         tree.dodajDzial("sportowe");
-        for (String i : tree) {
+        Iterator it = tree.iterator();
+        /*while (it.hasNext()) {
+            System.out.println(it.next().toString());
+        }
+
+         */
+        for (Dzial i : tree) {
             System.out.println(i);
         }
 
