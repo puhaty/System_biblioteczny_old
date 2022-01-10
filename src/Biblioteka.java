@@ -11,8 +11,8 @@ public class Biblioteka {
         this.tree = null;
     }
 
-    public void stworzDrzewo(double bottomBorder, double topBorder) {
-        tree = new Tree(bottomBorder, topBorder);
+    public void stworzDrzewo(String nazwa, double bottomBorderId, double topBorderId) {
+        tree = new Tree(nazwa, bottomBorderId, topBorderId);
         tree.dodajDzial("Science fiction");
         tree.dodajDzial("Obyczajowe");
         tree.dodajDzial("Kryminalne");

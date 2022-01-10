@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Dzial {
@@ -5,7 +7,7 @@ public class Dzial {
     private double dolnyZakres;
     private double gornyZakres;
     private Dzial parent = null;
-    private Dzial children = null;
+    private List<Dzial> children = new ArrayList<>();
 
     public Dzial(String nazwa) {//, double dolnyZakres, double gornyZakres) {
         this.nazwa = nazwa;
@@ -29,12 +31,12 @@ public class Dzial {
         this.parent = parent;
     }
 
-    public Dzial getChildren() {
+    public List<Dzial> getChildren() {
         return children;
     }
 
     public void setChildren(Dzial children) {
-        this.children = children;
+        this.children.add(children);
     }
 
     @Override

@@ -1,15 +1,19 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class Tree implements Iterable<String>{
     private Dzial root;
+    //private List<Dzial> dzialy = new ArrayList<>();
+    private String nazwa;
     private double bottomBorrderId;
     private double topBorderId;
     List<Pozycja> pozycje;
 
-    public Tree(double bottomBorrderId, double topBorderId) {
-        this.root = null;
+    public Tree(String nazwa, double bottomBorrderId, double topBorderId) {
+        this.root = new Dzial(nazwa);
+        this.nazwa = nazwa;
         this.bottomBorrderId = bottomBorrderId;
         this.topBorderId = topBorderId;
     }
@@ -19,14 +23,10 @@ public class Tree implements Iterable<String>{
 
         if (isEmpty()) {
             root = nowyDzial;
-        } else if (root.getChildren() == null){
+        } else {
             root.setChildren(nowyDzial);
             root.setParent(root);
             nowyDzial.setChildren(null);
-        }
-        else {
-            Dzial kolejnyDzial = new Dzial(nazwa);
-
         }
     }
 
@@ -54,7 +54,10 @@ public class Tree implements Iterable<String>{
                     throw new NoSuchElementException();
                 }
                 String nazwa = current.getNazwa();
-                current = current.getChildren();
+                for (Dzial i : current.getChildren()) {
+                    nazwa = i.getNazwa();
+                }
+                current = (Dzial) current.getChildren();
                 return nazwa;
             }
         };
