@@ -37,6 +37,7 @@ public class Tree implements Iterable<String>{
     public Iterator iterator() {
         Iterator it = new Iterator<>() {
             private Dzial current = root;
+            private List<Dzial> currents = null;
 
             @Override
             public boolean hasNext() {
@@ -54,10 +55,13 @@ public class Tree implements Iterable<String>{
                     throw new NoSuchElementException();
                 }
                 String nazwa = current.getNazwa();
-                for (Dzial i : current.getChildren()) {
-                    nazwa = i.getNazwa();
+                if (current.getChildren() != null) {
+                    currents = current.getChildren();
+                    for (Dzial i : currents) {
+                        nazwa = i.getNazwa();
+                        return nazwa;
+                    }
                 }
-                current = (Dzial) current.getChildren();
                 return nazwa;
             }
         };
