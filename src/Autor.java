@@ -2,8 +2,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Autor {
-    String imieINazwisko;
-    List<Double> ksiazki;
+    private String imieINazwisko;
+    private List<Double> ksiazki;
 
     @Override
     public boolean equals(Object o) {

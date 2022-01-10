@@ -1,9 +1,41 @@
 import java.util.Objects;
 
 public class Dzial {
-    String nazwa;
-    double dolnyZakres;
-    double gornyZakres;
+    private String nazwa;
+    private double dolnyZakres;
+    private double gornyZakres;
+    private Dzial parent = null;
+    private Dzial children = null;
+
+    public Dzial(String nazwa) {//, double dolnyZakres, double gornyZakres) {
+        this.nazwa = nazwa;
+        //this.dolnyZakres = dolnyZakres;
+        //this.gornyZakres = gornyZakres;
+    }
+
+    public String getNazwa() {
+        return nazwa;
+    }
+
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
+    }
+
+    public Dzial getParent() {
+        return parent;
+    }
+
+    public void setParent(Dzial parent) {
+        this.parent = parent;
+    }
+
+    public Dzial getChildren() {
+        return children;
+    }
+
+    public void setChildren(Dzial children) {
+        this.children = children;
+    }
 
     @Override
     public boolean equals(Object o) {

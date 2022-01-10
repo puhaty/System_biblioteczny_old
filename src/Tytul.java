@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Tytul {
-    String tytul;
+    private String tytul;
     List<Double> ksiazki;
 
     @Override
