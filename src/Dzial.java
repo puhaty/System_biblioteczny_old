@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,6 +41,8 @@ public class Dzial {
         this.children.add(children);
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,5 +56,12 @@ public class Dzial {
     @Override
     public int hashCode() {
         return Objects.hash(nazwa, dolnyZakres, gornyZakres);
+    }
+
+    @Override
+    public String toString() {
+        return "Dzial{" +
+                 nazwa + '\'' +
+                '}';
     }
 }
