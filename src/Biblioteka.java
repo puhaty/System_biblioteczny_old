@@ -19,7 +19,7 @@ public class Biblioteka {
         tree.dodajDzial("Kryminalne");
         tree.dodajDzial("naukowe");
         tree.dodajDzial("sportowe");
-        Iterator it = tree.iterator();
+        //Iterator it = tree.iterator();
         /*while (it.hasNext()) {
             System.out.println(it.next().toString());
         }

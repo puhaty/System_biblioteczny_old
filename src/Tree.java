@@ -42,12 +42,16 @@ public class Tree implements Iterable<Dzial> {
         private Dzial current = null;
         private List<Dzial> currents = null;
         private int currentElement = 0;
+        private boolean stopIteration = false;
 
         @Override
         public boolean hasNext() {
             if (current == null && root != null) {
                 return true;
             } else if (current != null) {
+                if (stopIteration) {
+                    return false;
+                }
                 return true;
             }
             return false;
@@ -65,6 +69,9 @@ public class Tree implements Iterable<Dzial> {
                     currents = current.getChildren();
                     current = current.getChildren().get(0);
                     currentElement = 0;
+                    if (current == null) {
+                        stopIteration = true;
+                    }
                 }
                 return currents.get(currentElement++);
             } else {
