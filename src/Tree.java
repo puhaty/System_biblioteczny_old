@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Tree implements Iterable<Dzial>{
+public class Tree implements Iterable<Dzial> {
     private Dzial root;
     private String nazwa;
     private double bottomBorrderId;
@@ -28,80 +28,51 @@ public class Tree implements Iterable<Dzial>{
         }
     }
 
-    public boolean isEmpty() { return root == null; }
-/*
+    public boolean isEmpty() {
+        return root == null;
+    }
+
     @Override
     public Iterator<Dzial> iterator() {
         return new LibraryIterator();
     }
 
     class LibraryIterator implements Iterator<Dzial> {
-        private List<Dzial> currentListChildren = null;
-        private List<Dzial> treeElements = new ArrayList<>();
+
+        private Dzial current = null;
+        private List<Dzial> currents = null;
         private int currentElement = 0;
-
-        public LibraryIterator() {
-
-            /*
-            if (current == null && root != null) {
-                iterators.add(root.iterator());
-            }
-            else if (current != null)
-            {
-                currentListChildren = current.getChildren();
-                for (Dzial i : currentListChildren) {
-                    tempList.add(i);
-                }
-                current = current.getChildren().get(0);
-                return tempList.;
-            }
-
-             */
-        /*}
 
         @Override
         public boolean hasNext() {
-            return (currentElement < treeElements.size());
-            /*
-            if (current == null && root != null)
-            {
+            if (current == null && root != null) {
+                return true;
+            } else if (current != null) {
                 return true;
             }
-            else if (current != null)
-            {
-                return current.getChildren() != null;
-            }
             return false;
-
-             */
-            /*
         }
 
         @Override
         public Dzial next() {
-            if (root != null) {
-                return root;
+            if (!hasNext()) {
+                throw new NoSuchElementException();
             }
-            else {
-                return treeElements.get(currentElement++);
-            }
-            /*
-            if (current == null && root != null) {
-                current = root;
-                return root;
-            }
-            else if (current != null)
-            {
-                currentListChildren = current.getChildren();
-                for (Dzial i : currentListChildren) {
-                    tempList.add(i);
+            //String nazwa = current.getNazwa();
+            //int counter = 0;
+            if (current != null) {
+                if (currentElement > currents.size() - 1) {
+                    currents = current.getChildren();
+                    current = current.getChildren().get(0);
+                    currentElement = 0;
                 }
+                return currents.get(currentElement++);
+            } else {
+                current = root;
+                currents = current.getChildren();
                 current = current.getChildren().get(0);
-                return tempList.;
+                return root;
             }
-            throw new NoSuchElementException();
-
-
         }
 
         @Override
@@ -109,8 +80,8 @@ public class Tree implements Iterable<Dzial>{
             Iterator.super.remove();
         }
     }
-
-    */
+}
+    /*
     @Override
     public Iterator iterator() {
         Iterator it = new Iterator<>() {
@@ -182,3 +153,80 @@ public class Tree implements Iterable<Dzial>{
 
 
 }
+/*
+class LibraryIterator implements Iterator<Dzial> {
+    private List<Dzial> currentListChildren = null;
+    private List<Dzial> treeElements = new ArrayList<>();
+    private int currentElement = 0;
+
+    public LibraryIterator() {
+
+            /*
+            if (current == null && root != null) {
+                iterators.add(root.iterator());
+            }
+            else if (current != null)
+            {
+                currentListChildren = current.getChildren();
+                for (Dzial i : currentListChildren) {
+                    tempList.add(i);
+                }
+                current = current.getChildren().get(0);
+                return tempList.;
+            }
+
+             */
+        /*}
+
+        @Override
+        public boolean hasNext() {
+            return (currentElement < treeElements.size());
+            /*
+            if (current == null && root != null)
+            {
+                return true;
+            }
+            else if (current != null)
+            {
+                return current.getChildren() != null;
+            }
+            return false;
+
+             */
+            /*
+        }
+
+        @Override
+        public Dzial next() {
+            if (root != null) {
+                return root;
+            }
+            else {
+                return treeElements.get(currentElement++);
+            }
+            /*
+            if (current == null && root != null) {
+                current = root;
+                return root;
+            }
+            else if (current != null)
+            {
+                currentListChildren = current.getChildren();
+                for (Dzial i : currentListChildren) {
+                    tempList.add(i);
+                }
+                current = current.getChildren().get(0);
+                return tempList.;
+            }
+            throw new NoSuchElementException();
+
+
+        }
+
+        @Override
+        public void remove() {
+            Iterator.super.remove();
+        }
+    }
+
+             */
