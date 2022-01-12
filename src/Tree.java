@@ -23,8 +23,10 @@ public class Tree implements Iterable<Dzial> {
             root.setParent(null);
         } else {
             root.setChildren(nowyDzial);
-            root.setParent(root);
-            nowyDzial.setChildren(null);
+            for (int i = 0; i < root.getChildren().size(); i++) {
+                root.getChildren().get(i).setParent(root);
+            }
+            //nowyDzial.setChildren(null);
         }
     }
 
@@ -36,6 +38,9 @@ public class Tree implements Iterable<Dzial> {
         while (current != null) {
             if(current.getNazwa().equals(nazwaDzialu)) {
                 current.setChildren(nowypodOddzial);
+                for (int i = 0; i < current.getChildren().size(); i++) {
+                    current.getChildren().get(i).setParent(current);
+                }
                 break;
             }
 

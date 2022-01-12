@@ -30,6 +30,7 @@ public class Biblioteka {
         }
 
         tree.dodajPodOddzial("Książki", "Przygodowe");
+        tree.dodajPodOddzial("Obyczajowe", "Romanse");
 
         for (Dzial i : tree) {
             System.out.println(i);
