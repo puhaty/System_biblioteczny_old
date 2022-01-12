@@ -29,5 +29,11 @@ public class Biblioteka {
             System.out.println(i);
         }
 
+        tree.dodajPodOddzial("Książki", "Przygodowe");
+
+        for (Dzial i : tree) {
+            System.out.println(i);
+        }
+
     }
 }

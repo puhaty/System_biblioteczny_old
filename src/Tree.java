@@ -28,6 +28,32 @@ public class Tree implements Iterable<Dzial> {
         }
     }
 
+    public void dodajPodOddzial(String nazwaDzialu, String nazwaPodOddzialu) {
+        Dzial nowypodOddzial = new Dzial(nazwaPodOddzialu);
+        Dzial current = root;
+        List<Dzial> currents = null;
+        int currentElement = 0;
+        while (current != null) {
+            if(current.getNazwa().equals(nazwaDzialu)) {
+                current.setChildren(nowypodOddzial);
+                break;
+            }
+
+            if (current == root) {
+                currents = current.getChildren();
+            }
+
+            if (currentElement == currents.size()) {
+                currentElement = 0;
+                currents = current.getChildren();
+                current = current.getChildren().get(currentElement);
+            }
+
+            current = currents.get(currentElement);
+            currentElement++;
+        }
+    }
+
     public boolean isEmpty() {
         return root == null;
     }
