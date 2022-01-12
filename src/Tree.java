@@ -49,6 +49,9 @@ public class Tree implements Iterable<Dzial> {
             if (current == null && root != null) {
                 return true;
             } else if (current != null) {
+                if (currentElement == currents.size()) {
+                    return false;
+                }
                 if (stopIteration) {
                     return false;
                 }
@@ -62,10 +65,9 @@ public class Tree implements Iterable<Dzial> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            //String nazwa = current.getNazwa();
-            //int counter = 0;
+
             if (current != null) {
-                if (currentElement > currents.size() - 1) {
+                if (currentElement == currents.size()) {
                     currents = current.getChildren();
                     current = current.getChildren().get(0);
                     currentElement = 0;
