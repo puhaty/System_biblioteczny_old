@@ -17,8 +17,8 @@ public class Biblioteka {
         tree.dodajDzial("Science fiction");
         tree.dodajDzial("Obyczajowe");
         tree.dodajDzial("Kryminalne");
-        tree.dodajDzial("naukowe");
-        tree.dodajDzial("sportowe");
+        tree.dodajDzial("Naukowe");
+        tree.dodajDzial("Sportowe");
         //Iterator it = tree.iterator();
         /*while (it.hasNext()) {
             System.out.println(it.next().toString());
@@ -39,6 +39,12 @@ public class Biblioteka {
         tree.dodajPodOddzial("Ziemia", "Wiem");
         tree.dodajPodOddzial("Księżyc", "Xd");
         tree.dodajPodOddzial("Xd", "Dx");
+        tree.dodajPodOddzial("Naukowe", "Biologia");
+        tree.dodajPodOddzial("Naukowe", "Geografia");
+        tree.dodajPodOddzial("Naukowe", "Historia");
+        tree.dodajPodOddzial("Geografia", "Morza");
+        tree.dodajPodOddzial("Geografia", "Mapy");
+
 
         System.out.println();
         for (Dzial i : tree) {
