@@ -26,7 +26,7 @@ public class Tree implements Iterable<Dzial> {
             for (int i = 0; i < root.getChildren().size(); i++) {
                 root.getChildren().get(i).setParent(root);
             }
-            //nowyDzial.setChildren(null);
+            //nowyDzial.setChildren(null); dzieci to lista, więc bez sensu
         }
     }
 
@@ -34,11 +34,13 @@ public class Tree implements Iterable<Dzial> {
         Dzial nowypodOddzial = new Dzial(nazwaPodOddzialu);
         Dzial current = root;
         List<Dzial> currents = null;
-        int currentElement = 0;
+        int currentElement = 0, depth = 0;
+        boolean stopIteration = true, returnIteration = false;
+
         while (current != null) {
-            if(current.getNazwa().equals(nazwaDzialu)) {
+            if(current.getNazwa().equals(nazwaDzialu) && current == root) { //sprawddzanie i dodanie kolejnego poddodzialu, jesłi dodajemy do roota
                 current.setChildren(nowypodOddzial);
-                for (int i = 0; i < current.getChildren().size(); i++) {
+                for (int i = 0; i < current.getChildren().size(); i++) { // ustawianie rodzica
                     current.getChildren().get(i).setParent(current);
                 }
                 break;
@@ -46,16 +48,86 @@ public class Tree implements Iterable<Dzial> {
 
             if (current == root) {
                 currents = current.getChildren();
+                current = currents.get(0);
             }
+            if (currents != null) {
+                while (stopIteration) {
+                    for (Dzial temp : currents) { //iteracja po dzieciach
+                        if (temp.getNazwa().equals(nazwaDzialu)) { //sprawddzanie i dodanie kolejnego poddodzialu
+                            temp.setChildren(nowypodOddzial);
+                            for (int i = 0; i < temp.getChildren().size(); i++) {
+                                temp.getChildren().get(i).setParent(temp);
+                            }
+                            stopIteration = false;
+                            break;
+                        }
+                    }
+                    if (stopIteration == false) break;
 
+                    if (current.getChildren().size() > 0 && returnIteration == false) { //wejście w kolejne dziecko od lewej
+                        currents = current.getChildren();
+                        current = currents.get(0);
+                        depth++;
+                        returnIteration = false;
+                    }
+                    else if (currents.size() > 1 && current.equals(currents.get(currents.size() - 1)) == false){ //przejście na kolejne dzieckood lewej //current != currents.get(-1) to sprawdza, czy current nie jest już ostatnim elementem na liście, wtedy przechodzimy do rodzica
+                        returnIteration = false;
+                        int count = 0;
+                        for (Dzial temp : currents) { //wyszukanie poprzedniej lokalizacji działu na podstawie pozycji rodzica
+                            if (current.equals(temp)) {
+                                current = currents.get(++count);         //trzeba zmienić żeby brał następną wartość;
+                                break;
+                            }
+                            count++;
+                        }
+                        /* if (depth > 0 && currents.get(currentElement + 1).getChildren().size() > 0) {
+                            if (currents.size() == currentElement) currentElement = 0;     //trzeba zmienić żeby nie było zależne od currentElement
+                            current = currents.get(++currentElement).getChildren().get(0);
+                            depth++;
+                            if (current.getChildren().size() > 1) {
+                                currents = current.getChildren();
+                                current = currents.get(++currentElement);
+                                if (currentElement == currents.size()) currentElement = 0;
+                                depth++;
+                            }
+                        }*/
+                    } else {                                                        //powrót do rodzica
+                        if (depth > 0) {
+                            current = current.getParent();
+                            currents = current.getParent().getChildren();
+                            depth--;
+                            returnIteration = true; // zmienna informuje, że current został przypisany do rodzica
+                            //if (current.getChildren().size() > 1) {
+                            //    currents = current.getChildren();
+                            //    current = currents.get(++currentElement);
+                            //    if (currentElement == currents.size()) currentElement = 0;
+                            //    depth++;
+                            //}
+                        }
+                    }
+                }
+            }
+            if (stopIteration == false) break;
+            //currents = current.getChildren();
+            //current = currents.get(currentElement);
+
+
+            /*
             if (currentElement == currents.size()) {
                 currentElement = 0;
-                currents = current.getChildren();
-                current = current.getChildren().get(currentElement);
+                if (current.getChildren() != null) {
+                    currents = current.getChildren();
+                    current = currents.get(currentElement);
+                }
+                else {
+                    current = currents.get(++currentElement);
+
+                }
+            } else {
+                current = currents.get(currentElement++);
             }
 
-            current = currents.get(currentElement);
-            currentElement++;
+             */
         }
     }
 

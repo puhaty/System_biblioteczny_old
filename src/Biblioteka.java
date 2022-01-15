@@ -31,7 +31,16 @@ public class Biblioteka {
 
         tree.dodajPodOddzial("Książki", "Przygodowe");
         tree.dodajPodOddzial("Obyczajowe", "Romanse");
+        tree.dodajPodOddzial("Science fiction", "Przyszłość");
+        tree.dodajPodOddzial("Przyszłość", "Kosmos");
+        tree.dodajPodOddzial("Przyszłość", "Ziemia");
+        tree.dodajPodOddzial("Przyszłość", "Księżyc");
+        tree.dodajPodOddzial("Ziemia", "Nie wiem");
+        tree.dodajPodOddzial("Ziemia", "Wiem");
+        tree.dodajPodOddzial("Księżyc", "Xd");
+        tree.dodajPodOddzial("Xd", "Dx");
 
+        System.out.println();
         for (Dzial i : tree) {
             System.out.println(i);
         }
