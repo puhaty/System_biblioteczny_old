@@ -21,11 +21,13 @@ public class Tree implements Iterable<Dzial> {
         if (isEmpty()) {
             root = nowyDzial;
             root.setParent(null);
+            root.setLevel(0);
         } else {
             root.setChildren(nowyDzial);
             for (int i = 0; i < root.getChildren().size(); i++) {
                 root.getChildren().get(i).setParent(root);
             }
+            nowyDzial.setLevel(1);
             //nowyDzial.setChildren(null); dzieci to lista, więc bez sensu
         }
     }
@@ -34,7 +36,7 @@ public class Tree implements Iterable<Dzial> {
         Dzial nowypodOddzial = new Dzial(nazwaPodOddzialu);
         Dzial current = root;
         List<Dzial> currents = null;
-        int depth = 0;
+        int depth = 1;
         boolean stopIteration = true, returnIteration = false;
 
         while (current != null) {
@@ -42,6 +44,7 @@ public class Tree implements Iterable<Dzial> {
                 current.setChildren(nowypodOddzial);
                 for (int i = 0; i < current.getChildren().size(); i++) { // ustawianie rodzica
                     current.getChildren().get(i).setParent(current);
+                    nowypodOddzial.setLevel(depth);
                 }
                 break;
             }
@@ -49,12 +52,14 @@ public class Tree implements Iterable<Dzial> {
             if (current == root) {
                 currents = current.getChildren();
                 current = currents.get(0);
+                depth++;
             }
             if (currents.size() > 0) {
                 while (stopIteration) {
                     for (Dzial temp : currents) { //iteracja po dzieciach
                         if (temp.getNazwa().equals(nazwaDzialu)) { //sprawddzanie i dodanie kolejnego poddodzialu
                             temp.setChildren(nowypodOddzial);
+                            nowypodOddzial.setLevel(depth);
                             for (int i = 0; i < temp.getChildren().size(); i++) {
                                 temp.getChildren().get(i).setParent(temp);
                             }

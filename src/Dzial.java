@@ -7,7 +7,7 @@ public class Dzial {
     private String nazwa;
     private double dolnyZakres;
     private double gornyZakres;
-    private int childrenId = 0, level = 0;
+    private int childrenId = 0, level = 0; //zmienna level pokazuje poziom działu w strukturze drzewa
     private Dzial parent = null;
     private List<Dzial> children = new ArrayList<>();
 
@@ -41,7 +41,13 @@ public class Dzial {
         this.children.add(children);
     }
 
+    public int getLevel() {
+        return level;
+    }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     @Override
     public boolean equals(Object o) {
