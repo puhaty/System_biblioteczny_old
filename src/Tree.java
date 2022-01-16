@@ -145,7 +145,7 @@ public class Tree implements Iterable<Dzial> {
         private Dzial current = null, stop = null;
         private List<Dzial> currents = null;
         private int depth = 0, currentElement = 0;
-        private boolean stopIteration = false, returnIteration = false, nextParent = false;
+        private boolean stopIteration = false, returnIteration = false, nextParent = false, nextChildren = false;
 
         @Override
         public boolean hasNext() {
@@ -171,13 +171,15 @@ public class Tree implements Iterable<Dzial> {
             }
             while (true) {
                 if (current != null) {
-                    if (currents.size() > 0 && returnIteration == false && currentElement < currents.size() && nextParent == false) { //przejście przez listę dzieci
+                    if (currents.size() > 0 && returnIteration == false && nextChildren == false /*&& nextParent == false*/) { //przejście przez listę dzieci
                         nextParent = false;
                         returnIteration = false;
-                        return currents.get(currentElement++);
+                        nextChildren = true;
+                        return current;
                     } else if (current.getChildren().size() > 0 && returnIteration == false) { //Wejście w kolejne dziecko od lewej
                         nextParent = false;
-                        currentElement = 0;
+                        nextChildren = false;
+                        //currentElement++;
                         currents = current.getChildren();
                         current = currents.get(0);
                         depth++;
@@ -185,6 +187,7 @@ public class Tree implements Iterable<Dzial> {
                         currentElement = 0;
                         returnIteration = false;
                         nextParent = true; //zmienna informuje nas, że przechodzimy do kolejnego rodzica
+                        nextChildren = false;
                         int count = 0;
                         for (Dzial temp : currents) { //wyszukanie poprzedniej lokalizacji działu na podstawie pozycji rodzica
                             if (current.equals(temp)) {
