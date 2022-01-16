@@ -142,20 +142,26 @@ public class Tree implements Iterable<Dzial> {
 
     class LibraryIterator implements Iterator<Dzial> {
 
-        private Dzial current = null;
+        private Dzial current = null, stop = null;
         private List<Dzial> currents = null;
         private int depth = 0, currentElement = 0;
         private boolean stopIteration = false, returnIteration = false, nextParent = false;
 
         @Override
         public boolean hasNext() {
-            if (true) {
-                if (stopIteration) {
-                    return false;
-                }
+            if (root.getChildren().size() == 0) {
+                return false;
+            }
+            if (current != null) {
+                  if (stopIteration) {
+                      return false;
+                  }
+                  else {
+                      return true;
+                  }
+            } else {
                 return true;
             }
-            return false;
         }
 
         @Override
@@ -190,10 +196,16 @@ public class Tree implements Iterable<Dzial> {
                     } else { //powrót do rodzica
                         currentElement = 0;
                         if (depth > 0) {
-                            current = current.getParent();
-                            currents = current.getParent().getChildren();
                             depth--;
-                            returnIteration = true;
+                            if (depth == 0) {
+                                stop = new Dzial("STOP");
+                                stopIteration = true;
+                                return stop;
+                            } else {
+                                current = current.getParent();
+                                currents = current.getParent().getChildren();
+                                returnIteration = true;
+                            }
                         }
                     }
                 } else { //jeśli nie ma przypisania do current to bierzemy root'a
