@@ -50,7 +50,7 @@ public class Tree implements Iterable<Dzial> {
                 currents = current.getChildren();
                 current = currents.get(0);
             }
-            if (currents != null) {
+            if (currents.size() > 0) {
                 while (stopIteration) {
                     for (Dzial temp : currents) { //iteracja po dzieciach
                         if (temp.getNazwa().equals(nazwaDzialu)) { //sprawddzanie i dodanie kolejnego poddodzialu
@@ -75,7 +75,7 @@ public class Tree implements Iterable<Dzial> {
                         int count = 0;
                         for (Dzial temp : currents) { //wyszukanie poprzedniej lokalizacji działu na podstawie pozycji rodzica
                             if (current.equals(temp)) {
-                                current = currents.get(++count);         //trzeba zmienić żeby brał następną wartość;
+                                current = currents.get(++count);         //przejście na kolejnego rodzica
                                 break;
                             }
                             count++;
@@ -144,17 +144,12 @@ public class Tree implements Iterable<Dzial> {
 
         private Dzial current = null;
         private List<Dzial> currents = null;
-        private int currentElement = 0;
-        private boolean stopIteration = false;
+        private int depth = 0, currentElement = 0;
+        private boolean stopIteration = false, returnIteration = false, nextParent = false;
 
         @Override
         public boolean hasNext() {
-            if (current == null && root != null) {
-                return true;
-            } else if (current != null) {
-                if (currentElement == currents.size()) {
-                    return false;
-                }
+            if (true) {
                 if (stopIteration) {
                     return false;
                 }
@@ -168,22 +163,46 @@ public class Tree implements Iterable<Dzial> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-
-            if (current != null) {
-                if (currentElement == currents.size()) {
-                    currents = current.getChildren();
-                    current = current.getChildren().get(0);
-                    currentElement = 0;
-                    if (current == null) {
-                        stopIteration = true;
+            while (true) {
+                if (current != null) {
+                    if (currents.size() > 0 && returnIteration == false && currentElement < currents.size() && nextParent == false) { //przejście przez listę dzieci
+                        nextParent = false;
+                        returnIteration = false;
+                        return currents.get(currentElement++);
+                    } else if (current.getChildren().size() > 0 && returnIteration == false) { //Wejście w kolejne dziecko od lewej
+                        nextParent = false;
+                        currentElement = 0;
+                        currents = current.getChildren();
+                        current = currents.get(0);
+                        depth++;
+                    } else if (currents.size() > 1 && current.equals(currents.get(currents.size() - 1)) == false) {//Przejście na kolejnego rodzica
+                        currentElement = 0;
+                        returnIteration = false;
+                        nextParent = true; //zmienna informuje nas, że przechodzimy do kolejnego rodzica
+                        int count = 0;
+                        for (Dzial temp : currents) { //wyszukanie poprzedniej lokalizacji działu na podstawie pozycji rodzica
+                            if (current.equals(temp)) {
+                                current = currents.get(++count);         //trzeba zmienić żeby brał następną wartość;
+                                break;
+                            }
+                            count++;
+                        }
+                    } else { //powrót do rodzica
+                        currentElement = 0;
+                        if (depth > 0) {
+                            current = current.getParent();
+                            currents = current.getParent().getChildren();
+                            depth--;
+                            returnIteration = true;
+                        }
                     }
+                } else { //jeśli nie ma przypisania do current to bierzemy root'a
+                    current = root;
+                    currents = current.getChildren();
+                    current = currents.get(0);
+                    depth++;
+                    return root;
                 }
-                return currents.get(currentElement++);
-            } else {
-                current = root;
-                currents = current.getChildren();
-                current = current.getChildren().get(0);
-                return root;
             }
         }
 

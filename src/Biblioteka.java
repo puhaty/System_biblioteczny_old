@@ -25,9 +25,9 @@ public class Biblioteka {
         }
 
          */
-        for (Dzial i : tree) {
-            System.out.println(i);
-        }
+        //for (Dzial i : tree) {
+        //    System.out.println(i);
+        //}
 
         tree.dodajPodOddzial("Książki", "Przygodowe");
         tree.dodajPodOddzial("Obyczajowe", "Romanse");
