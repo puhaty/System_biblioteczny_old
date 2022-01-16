@@ -7,7 +7,7 @@ public class Dzial {
     private String nazwa;
     private double dolnyZakres;
     private double gornyZakres;
-    private int childrenId;
+    private int childrenId = 0, level = 0;
     private Dzial parent = null;
     private List<Dzial> children = new ArrayList<>();
 

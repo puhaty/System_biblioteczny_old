@@ -34,7 +34,7 @@ public class Tree implements Iterable<Dzial> {
         Dzial nowypodOddzial = new Dzial(nazwaPodOddzialu);
         Dzial current = root;
         List<Dzial> currents = null;
-        int currentElement = 0, depth = 0;
+        int depth = 0;
         boolean stopIteration = true, returnIteration = false;
 
         while (current != null) {
@@ -80,54 +80,17 @@ public class Tree implements Iterable<Dzial> {
                             }
                             count++;
                         }
-                        /* if (depth > 0 && currents.get(currentElement + 1).getChildren().size() > 0) {
-                            if (currents.size() == currentElement) currentElement = 0;     //trzeba zmienić żeby nie było zależne od currentElement
-                            current = currents.get(++currentElement).getChildren().get(0);
-                            depth++;
-                            if (current.getChildren().size() > 1) {
-                                currents = current.getChildren();
-                                current = currents.get(++currentElement);
-                                if (currentElement == currents.size()) currentElement = 0;
-                                depth++;
-                            }
-                        }*/
                     } else {                                                        //powrót do rodzica
                         if (depth > 0) {
                             current = current.getParent();
                             currents = current.getParent().getChildren();
                             depth--;
                             returnIteration = true; // zmienna informuje, że current został przypisany do rodzica
-                            //if (current.getChildren().size() > 1) {
-                            //    currents = current.getChildren();
-                            //    current = currents.get(++currentElement);
-                            //    if (currentElement == currents.size()) currentElement = 0;
-                            //    depth++;
-                            //}
                         }
                     }
                 }
             }
             if (stopIteration == false) break;
-            //currents = current.getChildren();
-            //current = currents.get(currentElement);
-
-
-            /*
-            if (currentElement == currents.size()) {
-                currentElement = 0;
-                if (current.getChildren() != null) {
-                    currents = current.getChildren();
-                    current = currents.get(currentElement);
-                }
-                else {
-                    current = currents.get(++currentElement);
-
-                }
-            } else {
-                current = currents.get(currentElement++);
-            }
-
-             */
         }
     }
 
@@ -171,7 +134,7 @@ public class Tree implements Iterable<Dzial> {
             }
             while (true) {
                 if (current != null) {
-                    if (currents.size() > 0 && returnIteration == false && nextChildren == false /*&& nextParent == false*/) { //przejście przez listę dzieci
+                    if (currents.size() > 0 && returnIteration == false && nextChildren == false) { //przejście przez listę dzieci
                         nextParent = false;
                         returnIteration = false;
                         nextChildren = true;
@@ -179,7 +142,6 @@ public class Tree implements Iterable<Dzial> {
                     } else if (current.getChildren().size() > 0 && returnIteration == false) { //Wejście w kolejne dziecko od lewej
                         nextParent = false;
                         nextChildren = false;
-                        //currentElement++;
                         currents = current.getChildren();
                         current = currents.get(0);
                         depth++;
