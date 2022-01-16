@@ -44,7 +44,11 @@ public class Biblioteka {
         } else {
             for (Dzial i : tree) {
                 if (i.getNazwa().equals("STOP")) break;
-                System.out.println(i);
+                for (int j = 0; j < i.getLevel(); j++) {
+                    System.out.print("-");
+                }
+                System.out.print(i);
+                System.out.println();
             }
         }
     }
