@@ -19,16 +19,7 @@ public class Biblioteka {
         tree.dodajDzial("Kryminalne");
         tree.dodajDzial("Naukowe");
         tree.dodajDzial("Sportowe");
-        //Iterator it = tree.iterator();
-        /*while (it.hasNext()) {
-            System.out.println(it.next().toString());
-        }
-
-         */
-        //for (Dzial i : tree) {
-        //    System.out.println(i);
-        //}
-
+            //pododdziały
         tree.dodajPodOddzial("Książki", "Przygodowe");
         tree.dodajPodOddzial("Obyczajowe", "Romanse");
         tree.dodajPodOddzial("Science fiction", "Przyszłość");
@@ -45,11 +36,16 @@ public class Biblioteka {
         tree.dodajPodOddzial("Geografia", "Morza");
         tree.dodajPodOddzial("Geografia", "Mapy");
 
+    }
 
-        System.out.println();
-        for (Dzial i : tree) {
-            System.out.println(i);
+    public void showCatalogStructure() {
+        if (tree.isEmpty()) {
+            System.out.println("katalog jest pusty!!");
+        } else {
+            for (Dzial i : tree) {
+                if (i.getNazwa().equals("STOP")) break;
+                System.out.println(i);
+            }
         }
-
     }
 }
