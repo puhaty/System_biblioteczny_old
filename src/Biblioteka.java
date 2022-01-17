@@ -38,8 +38,7 @@ public class Biblioteka {
         tree.dodajPodOddzial("Geografia", "Mapy");
         tree.dodajPodOddzial("Dupa", "Blada");
         tree.dodajPodOddzial("Dupa", "Czarna");
-
-
+        tree.dodajPodOddzial("asdfsa", "asdw");
     }
 
     public void showCatalogStructure(Tree tree) {
