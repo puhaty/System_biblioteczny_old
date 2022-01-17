@@ -6,6 +6,13 @@ public class Tree implements Iterable<Section> {
     private double bottomBorrderId;
     private double topBorderId;
 
+
+    /**
+     *konstruktor drzewa
+     * @param name - nazwa drzewa
+     * @param bottomBorrderId - początek zakresu drzewa
+     * @param topBorderId - koniec zakresu drzewa
+     */
     public Tree(String name, double bottomBorrderId, double topBorderId) {
         this.root = new Section(name);
         this.root.setParent(null);
@@ -14,8 +21,12 @@ public class Tree implements Iterable<Section> {
         this.topBorderId = topBorderId;
     }
 
-    public void addSection(String nazwa) {
-        Section newSection = new Section(nazwa);
+    /**
+     *funkcja dodaje główne działy do głównego węzła: root
+     * @param name - nazwa dodawanego działu
+     */
+    public void addSection(String name) {
+        Section newSection = new Section(name);
 
         root.setChildren(newSection);
         for (int i = 0; i < root.getChildren().size(); i++) {
@@ -25,15 +36,20 @@ public class Tree implements Iterable<Section> {
         //nowyDzial.setChildren(null); dzieci to lista, więc bez sensu
     }
 
-    public void addSubsection(String nazwaDzialu, String nazwaPodOddzialu) {
-        Section newSubsection = new Section(nazwaPodOddzialu);
+    /**
+     *funkcja dodaje nowy podkatalog do istniejącego już katalogu
+     * @param sectionName - nawa działu do którego dodajemy pododdział
+     * @param subsectionName - nazwa pododdziału
+     */
+    public void addSubsection(String sectionName, String subsectionName) {
+        Section newSubsection = new Section(subsectionName);
         Section current = root;
         List<Section> currents = null;
         int depth = 0;
         boolean stopIteration = true, returnIteration = false, nextChildren = false;
 
         while (current != null) {
-            if(current.getName().equals(nazwaDzialu) && current == root) { //sprawddzanie i dodanie kolejnego poddodzialu, jesłi dodajemy do roota
+            if(current.getName().equals(sectionName) && current == root) { //sprawddzanie i dodanie kolejnego poddodzialu, jesłi dodajemy do roota
                 current.setChildren(newSubsection);
                 for (int i = 0; i < current.getChildren().size(); i++) { // ustawianie rodzica
                     current.getChildren().get(i).setParent(current);
@@ -52,7 +68,7 @@ public class Tree implements Iterable<Section> {
 
                     if (currents.size() > 0 && !returnIteration && !nextChildren) {
                         nextChildren = true;
-                        if (current.getName().equals(nazwaDzialu)) { //sprawddzanie i dodanie kolejnego poddodzialu
+                        if (current.getName().equals(sectionName)) { //sprawddzanie i dodanie kolejnego poddodzialu
                             current.setChildren(newSubsection);
                             newSubsection.setLevel(depth + 1);
                             for (int i = 0; i < current.getChildren().size(); i++) {
@@ -98,6 +114,11 @@ public class Tree implements Iterable<Section> {
             if (!stopIteration) break;
         }
     }
+
+    /**
+     * sprawdza czy jest drzewo jest puste
+     * @return
+     */
     public boolean isEmpty() {
         return root.getChildren().isEmpty();
     }
@@ -111,6 +132,9 @@ public class Tree implements Iterable<Section> {
         return new LibraryIterator();
     }
 
+    /**
+     * Iterator po drzewie
+     */
     class LibraryIterator implements Iterator<Section> {
 
         private Section current = null;
