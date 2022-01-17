@@ -50,11 +50,7 @@ public class Tree implements Iterable<Section> {
 
         while (current != null) {
             if(current.getName().equals(sectionName) && current == root) { //sprawddzanie i dodanie kolejnego poddodzialu, jesłi dodajemy do roota
-                current.setChildren(newSubsection);
-                for (int i = 0; i < current.getChildren().size(); i++) { // ustawianie rodzica
-                    current.getChildren().get(i).setParent(current);
-                    newSubsection.setLevel(depth + 1);
-                }
+                addChildren(current, newSubsection, depth); // dodanie działu do roota
                 break;
             }
 
@@ -69,11 +65,7 @@ public class Tree implements Iterable<Section> {
                     if (currents.size() > 0 && !returnIteration && !nextChildren) {
                         nextChildren = true;
                         if (current.getName().equals(sectionName)) { //sprawddzanie i dodanie kolejnego poddodzialu
-                            current.setChildren(newSubsection);
-                            newSubsection.setLevel(depth + 1);
-                            for (int i = 0; i < current.getChildren().size(); i++) {
-                                current.getChildren().get(i).setParent(current);
-                            }
+                            addChildren(current, newSubsection, depth); //dodanie pododdziału
                             stopIteration = false;
                             break;
                         }
@@ -112,6 +104,20 @@ public class Tree implements Iterable<Section> {
                 }
             }
             if (!stopIteration) break;
+        }
+    }
+
+    /**
+     * funkcja dodaje dziecko do wsklazanego węzła
+     * @param current - węzeł do którego będziemy dodawali
+     * @param newChildren - nazwa dziecka które dodajemy
+     * @param depth - głębokość(poziom) drzewa
+     */
+    private void addChildren(Section current, Section newChildren, int depth) {
+        current.setChildren(newChildren);
+        newChildren.setLevel(depth + 1);
+        for (int i = 0; i < current.getChildren().size(); i++) {
+            current.getChildren().get(i).setParent(current);
         }
     }
 
