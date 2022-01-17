@@ -43,7 +43,7 @@ public class Biblioteka {
     }
 
     public void showCatalogStructure(Tree tree) {
-        String intendation = "__", tabulation = "  ";
+        String intendation = "______", tabulation = "  ";
         if (tree.isEmpty()) {
             System.out.println("katalog jest pusty!!");
         } else {
@@ -53,15 +53,25 @@ public class Biblioteka {
                 if (i.equals(tree.getRoot())) {
                     System.out.println(i);
                 } else {
-                    for (int j = 0; j < i.getLevel(); j++) {
-                        System.out.print(tabulation);
-                    }
-                    System.out.print("|");
-                    for (int j = 0; j < i.getLevel(); j++) {
+                    if (i.getLevel() == 1) {
+                        tabulation = "  ";
+                        for (int j = 0; j < i.getLevel(); j++) {
+                            System.out.print(tabulation);
+                        }
+                        System.out.print("|");
                         System.out.print(intendation);
+                        System.out.print(" " + i);
+                        System.out.println();
+                    } else {
+                        tabulation = "    ";
+                        for (int j = 0; j < i.getLevel(); j++) {
+                            System.out.print(tabulation);
+                        }
+                            System.out.print("|");
+                            System.out.print(intendation);
+                            System.out.print(" " + i);
+                            System.out.println();
                     }
-                    System.out.print(" " + i);
-                    System.out.println();
                 }
             }
         }
