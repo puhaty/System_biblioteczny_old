@@ -103,6 +103,10 @@ public class Tree implements Iterable<Dzial> {
         return root == null;
     }
 
+    public Dzial getRoot() {
+        return root;
+    }
+
     @Override
     public Iterator<Dzial> iterator() {
         return new LibraryIterator();
