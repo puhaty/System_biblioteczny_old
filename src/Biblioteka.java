@@ -60,7 +60,7 @@ public class Biblioteka {
                     for (int j = 0; j < i.getLevel(); j++) {
                         System.out.print(intendation);
                     }
-                    System.out.print(">" + i);
+                    System.out.print(" " + i);
                     System.out.println();
                 }
             }
