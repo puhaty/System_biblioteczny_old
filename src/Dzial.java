@@ -66,8 +66,6 @@ public class Dzial {
 
     @Override
     public String toString() {
-        return "Dzial{" +
-                 nazwa + '\'' +
-                '}';
+        return nazwa;
     }
 }

@@ -47,6 +47,7 @@ public class Biblioteka {
         if (tree.isEmpty()) {
             System.out.println("katalog jest pusty!!");
         } else {
+            System.out.println();
             for (Dzial i : tree) {
                 if (i.getNazwa().equals("STOP")) break; //wyrzucenie działu: STOP, który został utworzony tylko dla zatrzymania iteracji
                 if (i.equals(tree.getRoot())) {
