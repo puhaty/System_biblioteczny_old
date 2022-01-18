@@ -1,11 +1,11 @@
-public class Pozycja{
+public class Book {
     private double isbn;
     private String title;
     private String author;
-    private String dzial;
+    private String section;
 
-    public Pozycja(String rodzajKsiazki, double isbn, String title, String author) {
-        this.dzial = rodzajKsiazki;
+    public Book(String sectionName, double isbn, String title, String author) {
+        this.section = sectionName;
         this.isbn = isbn;
         this.title = title;
         this.author = author;

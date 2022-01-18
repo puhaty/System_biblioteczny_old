@@ -9,12 +9,17 @@ public class Section {
     private int level = 0; //,childrenId = 0;  //zmienna level pokazuje poziom działu w strukturze drzewa
     private Section parent = null;
     private final List<Section> children = new ArrayList<>();
-    //private final L
+    private final List<Book> books = new ArrayList<>();
 
     public Section(String name) {//, double dolnyZakres, double gornyZakres) {
         this.name = name;
         //this.dolnyZakres = dolnyZakres;
         //this.gornyZakres = gornyZakres;
+    }
+
+    public void addBook(String sectionName, double isbn, String title, String author) {
+        Book book = new Book(sectionName, isbn, title, author);
+        books.add(book);
     }
 
     public String getName() {

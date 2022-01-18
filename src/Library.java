@@ -1,64 +1,72 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Library {
-    private Tree tree = null, tree2 = null;
+    private Catalog catalog = null, catalog2 = null;
     //List<Section> dzialy = new ArrayList<>();
     //List<Autor> autorzy = new ArrayList<>();
     //List<Tytul> tytuly = new ArrayList<>();
 
     public Library() {
-        this.tree = null;
+        this.catalog = null;
     }
 
-    public Tree getTree2() {
-        return tree2;
+    public Catalog getTree2() {
+        return catalog2;
     }
 
     public void createTree(String name, double bottomBorderId, double topBorderId) {
-        tree = new Tree(name, bottomBorderId, topBorderId);
-        tree.addSection("Science fiction");
-        tree.addSection("Obyczajowe");
-        tree.addSection("Kryminalne");
-        tree.addSection("Naukowe");
-        tree.addSection("Sportowe");
-        tree.addSection("Poezja");
-        tree.addSection("Lektury");
-        tree.addSection("Psychologiczne");
+        catalog = new Catalog(name, bottomBorderId, topBorderId);
+        catalog.addSection("Science fiction");
+        catalog.addSection("Obyczajowe");
+        catalog.addSection("Kryminalne");
+        catalog.addSection("Naukowe");
+        catalog.addSection("Sportowe");
+        catalog.addSection("Poezja");
+        catalog.addSection("Lektury");
+        catalog.addSection("Psychologiczne");
             //pododdziały
-        tree.addSubsection("Książki", "Przygodowe");
-        tree.addSubsection("Obyczajowe", "Romanse");
-        tree.addSubsection("Science fiction", "Przyszłość");
-        tree.addSubsection("Science fiction", "Starożytność");
-        tree.addSubsection("Przyszłość", "Kosmos");
-        tree.addSubsection("Przyszłość", "Ziemia");
-        tree.addSubsection("Przyszłość", "Księżyc");
-        tree.addSubsection("Ziemia", "Nie wiem");
-        tree.addSubsection("Ziemia", "Wiem");
-        tree.addSubsection("Księżyc", "Xd");
-        tree.addSubsection("Naukowe", "Biologia");
-        tree.addSubsection("Naukowe", "Geografia");
-        tree.addSubsection("Naukowe", "Historia");
-        tree.addSubsection("Geografia", "Morza");
-        tree.addSubsection("Geografia", "Mapy");
-        tree.addSubsection("Asdfsa", "Asdw");
+        catalog.addSubsection("Książki", "Przygodowe");
+        catalog.addSubsection("Obyczajowe", "Romanse");
+        catalog.addSubsection("Science fiction", "Przyszłość");
+        catalog.addSubsection("Science fiction", "Starożytność");
+        catalog.addSubsection("Przyszłość", "Kosmos");
+        catalog.addSubsection("Przyszłość", "Ziemia");
+        catalog.addSubsection("Przyszłość", "Księżyc");
+        catalog.addSubsection("Ziemia", "Nie wiem");
+        catalog.addSubsection("Ziemia", "Wiem");
+        catalog.addSubsection("Księżyc", "Xd");
+        catalog.addSubsection("Naukowe", "Biologia");
+        catalog.addSubsection("Naukowe", "Geografia");
+        catalog.addSubsection("Naukowe", "Historia");
+        catalog.addSubsection("Geografia", "Morza");
+        catalog.addSubsection("Geografia", "Mapy");
+        catalog.addSubsection("Asdfsa", "Asdw");
     }
 
     public void createTree2(String name, double bottomBorderId, double topBorderId) {
-        tree2 = new Tree(name, bottomBorderId, topBorderId);
+        catalog2 = new Catalog(name, bottomBorderId, topBorderId);
         //tree2.addSection("xd");
 
     }
 
-    public void showCatalogStructure(Tree tree) {
+    public void addNewBook(String sectionName, double isbn, String title, String author) {
+        boolean ifAdded = false;
+        for (Section i : catalog) {
+            if (i.getName().equals(sectionName)) {
+                i.addBook(sectionName, isbn, title, author);
+                ifAdded = true;
+            }
+        }
+        if (!ifAdded) System.out.println("nie ma takiego działu!!!");
+    }
+
+    public void showCatalogStructure(Catalog catalog) {
         String indentation = "______", tabulation = "  ";
-        if (tree.isEmpty()) {
+        if (catalog.isEmpty()) {
             System.out.println("\nkatalog jest pusty!!");
         } else {
             System.out.println();
-            for (Section i : tree) {
+            for (Section i : catalog) {
                 if (i.getName().equals("STOP")) break; //wyrzucenie działu: STOP, który został utworzony tylko dla zatrzymania iteracji
-                if (i.equals(tree.getRoot())) {
+                if (i.equals(catalog.getRoot())) {
                     System.out.println(i);
                 } else {
                     if (i.getLevel() == 1) {
@@ -83,7 +91,7 @@ public class Library {
 
 
 
-    public Tree getTree() {
-        return tree;
+    public Catalog getTree() {
+        return catalog;
     }
 }

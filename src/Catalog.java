@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Tree implements Iterable<Section> {
+public class Catalog implements Iterable<Section> {
     private final Section root;
     private String name;
     private double bottomBorrderId;
@@ -13,7 +13,7 @@ public class Tree implements Iterable<Section> {
      * @param bottomBorrderId - początek zakresu drzewa
      * @param topBorderId - koniec zakresu drzewa
      */
-    public Tree(String name, double bottomBorrderId, double topBorderId) {
+    public Catalog(String name, double bottomBorrderId, double topBorderId) {
         this.root = new Section(name);
         this.root.setParent(null);
         this.name = name;
@@ -33,7 +33,6 @@ public class Tree implements Iterable<Section> {
             root.getChildren().get(i).setParent(root);
         }
         newSection.setLevel(1);
-        //nowyDzial.setChildren(null); dzieci to lista, więc bez sensu
     }
 
     /**
