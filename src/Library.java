@@ -22,25 +22,25 @@ public class Library {
         tree.addSection("Kryminalne");
         tree.addSection("Naukowe");
         tree.addSection("Sportowe");
-        tree.addSection("Dupa");
+        tree.addSection("Poezja");
+        tree.addSection("Lektury");
+        tree.addSection("Psychologiczne");
             //pododdziały
         tree.addSubsection("Książki", "Przygodowe");
         tree.addSubsection("Obyczajowe", "Romanse");
         tree.addSubsection("Science fiction", "Przyszłość");
+        tree.addSubsection("Science fiction", "Starożytność");
         tree.addSubsection("Przyszłość", "Kosmos");
         tree.addSubsection("Przyszłość", "Ziemia");
         tree.addSubsection("Przyszłość", "Księżyc");
         tree.addSubsection("Ziemia", "Nie wiem");
         tree.addSubsection("Ziemia", "Wiem");
         tree.addSubsection("Księżyc", "Xd");
-        tree.addSubsection("Xd", "Dx");
         tree.addSubsection("Naukowe", "Biologia");
         tree.addSubsection("Naukowe", "Geografia");
         tree.addSubsection("Naukowe", "Historia");
         tree.addSubsection("Geografia", "Morza");
         tree.addSubsection("Geografia", "Mapy");
-        tree.addSubsection("Dupa", "Blada");
-        tree.addSubsection("Dupa", "Czarna");
         tree.addSubsection("Asdfsa", "Asdw");
     }
 

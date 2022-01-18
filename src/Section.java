@@ -9,6 +9,7 @@ public class Section {
     private int level = 0; //,childrenId = 0;  //zmienna level pokazuje poziom działu w strukturze drzewa
     private Section parent = null;
     private final List<Section> children = new ArrayList<>();
+    //private final L
 
     public Section(String name) {//, double dolnyZakres, double gornyZakres) {
         this.name = name;
