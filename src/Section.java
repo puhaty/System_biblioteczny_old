@@ -6,7 +6,7 @@ public class Section {
     private String name;
     private double bottomBorrder;
     private double topBorrder;
-    private int level = 0; //,childrenId = 0;  //zmienna level pokazuje poziom działu w strukturze drzewa
+    private int level = 0;                  //zmienna level pokazuje poziom działu w strukturze drzewa
     private Section parent = null;
     private final List<Section> children = new ArrayList<>();
     private final List<Book> books = new ArrayList<>();

@@ -39,6 +39,7 @@ public class Library {
         catalog.addSubsection("Geografia", "Morza");
         catalog.addSubsection("Geografia", "Mapy");
         catalog.addSubsection("Asdfsa", "Asdw");
+        catalog.editSection("Geografia", "dupa blada");
     }
 
     public void createTree2(String name, double bottomBorderId, double topBorderId) {
