@@ -40,6 +40,7 @@ public class Library {
         catalog.addSubsection("Geografia", "Mapy");
         catalog.addSubsection("Asdfsa", "Asdw");
         catalog.editSection("Geografia", "dupa blada");
+        catalog.replaceSection("Przyszłoś", "Dupa");
     }
 
     public void createTree2(String name, double bottomBorderId, double topBorderId) {

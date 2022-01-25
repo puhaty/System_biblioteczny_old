@@ -38,12 +38,16 @@ public class Catalog implements Iterable<Section> {
     public void addSubsection(String sectionName, String subsectionName) {
         Section newSubsection = new Section(subsectionName);
         Section tempSection = searchSection(sectionName);
-        int level = tempSection.getLevel();
-        addChildren(tempSection, newSubsection, level);
+        if (tempSection != null) {
+            int level = tempSection.getLevel();
+            addChildren(tempSection, newSubsection, level);
+        } else {
+            System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu!!!");
+        }
     }
 
     /**
-     * funkcja dodaje dziecko do wsklazanego węzła
+     * funkcja dodaje dziecko do wskazanego węzła
      * @param current - węzeł do którego będziemy dodawali
      * @param newChildren - nazwa dziecka które dodajemy
      * @param depth - głębokość(poziom) drzewa
@@ -57,7 +61,28 @@ public class Catalog implements Iterable<Section> {
     }
 
     public void editSection(String sectionName, String newSectionName) {
-        searchSection(sectionName).setName(newSectionName);
+        Section edit = searchSection(sectionName);
+        if (edit != null) {
+            edit.setName(newSectionName);
+        } else {
+            System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu!!!");
+        }
+
+    }
+
+    public void replaceSection(String replaceSectionName, String targetSectionName) {
+        Section section1 = searchSection(replaceSectionName);
+        Section section2 = searchSection(targetSectionName);
+
+        if (section1 != null && section2 != null) {
+            Section parentSection1 = section1.getParent();
+            parentSection1.getChildren().remove(section1);
+            section1.setParent(section2);
+            section2.setChildren(section1);
+            System.out.println();
+        } else {
+            System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu!!!");
+        }
     }
 
     public Section searchSection(String sectionName) {
@@ -105,8 +130,8 @@ public class Catalog implements Iterable<Section> {
                     } else {               //powrót do rodzica
                         if (level > 0) {
                             level--;
-                            if (level == 0) {
-                                System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu!!!");
+                            if (level == 0) { //nic nie znaleziono
+                                //System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu!!!");
                                 stopIteration = false;
                                 break;
                             } else {
@@ -120,12 +145,11 @@ public class Catalog implements Iterable<Section> {
             }
             if (!stopIteration) break;
         }
-        return current;
+        return null;
     }
 
     /**
      * sprawdza czy jest drzewo jest puste
-     * @return
      */
     public boolean isEmpty() {
         return root.getChildren().isEmpty();
