@@ -10,7 +10,7 @@ public class Test{
         library.addNewBook("Nie wiem", 87345, "Xddddddddd", "Mateusz Chechłowski");
         library.addNewBook("xdddd", 87345, "Xddddddddd", "Mateusz Chechłowski");
         library.saveCatalogToFile("catalog.txt", library.getCatalog());
-        Catalog catalog = library.addToCatalogFromList();
+        Catalog catalog = library.addToCatalogFromList(":");
         library.showCatalogStructure(catalog);
     }
 }

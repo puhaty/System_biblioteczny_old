@@ -1,0 +1,11 @@
+root:Dupa
+Blada:Dupa
+Czarna:Dupa
+Wołowa:Dupa
+Xd:Czarna
+Dx:Czarna
+Nie wiem:Blada
+Wiem:Nie wiem
+Także tak:Xd
+Otóż nie:Także tak
+

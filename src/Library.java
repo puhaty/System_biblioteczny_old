@@ -69,7 +69,7 @@ public class Library {
         if (!ifAdded) System.out.println("nie ma takiego działu!!!");
     }
 
-    public void showCatalogStructure(Catalog catalog) {
+    public void showCatalogStructure(Catalog catalog) throws NullPointerException {
         String indentation = "______", tabulation = "  ";
         if (catalog.isEmpty()) {
             System.out.println("\nkatalog jest pusty!!");
@@ -158,14 +158,32 @@ public class Library {
         return listCatalogFromFile;
     }
 
-    Catalog addToCatalogFromList() throws IOException {
-        List<String> list = readCatalogFromFileToList("catalog.txt");
-        Catalog catalog = null;
-        String root;
+    Catalog addToCatalogFromList(String separator) throws IOException {
+        List<String> list = readCatalogFromFileToList("catalogToRead.txt");
+        Catalog catalog;
+        List<String[]> arrayList;
+        if (!list.isEmpty() && list.get(0).length() > 1) {
+            arrayList = new ArrayList<>();
+            catalog = new Catalog(null, 0, 0);
 
-        if (!list.isEmpty()) {
-            root = list.get(0);
-            catalog = new Catalog(root, 12,23);
+            for (String s : list) {
+                String[] strip = s.split(separator);
+                if (strip.length > 1) {
+                    strip[0] = strip[0].strip();
+                    strip[1] = strip[1].strip();
+                }
+                arrayList.add(strip);
+            }
+
+            for (String[] t : arrayList) {
+                if (t.length > 1) {
+                    if (t[0].equals("root")) {
+                        catalog = new Catalog(t[1], 0, 0);
+                    } else {
+                        catalog.addSubsection(t[1], t[0]);
+                    }
+                }
+            }
             return catalog;
         }
         else {

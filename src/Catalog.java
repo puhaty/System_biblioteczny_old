@@ -1,10 +1,10 @@
 import java.util.*;
 
 public class Catalog implements Iterable<Section> {
-    private final Section root;
+    private Section root = null;
     private String name;
-    private double bottomBorrderId;
-    private double topBorderId;
+    private double bottomBorrderId = 0;
+    private double topBorderId = 0;
 
 
     /**
@@ -192,6 +192,7 @@ public class Catalog implements Iterable<Section> {
 
             if (current == root) {
                 currents = current.getChildren();
+
                 current = currents.get(0);
                 level++;
             }
@@ -388,8 +389,8 @@ public class Catalog implements Iterable<Section> {
                     }
                 } else { //jeśli nie ma przypisania do current to bierzemy root'a
                     if (root.getChildren().size() > 0) {
-                        current = current.getChildren().get(0);
                         currents = current.getChildren();
+                        current = currents.get(0);
                         return root;
                     } else {
                         stopIteration = true;
