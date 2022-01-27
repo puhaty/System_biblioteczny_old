@@ -1,3 +1,5 @@
+import java.io.*;
+
 public class Library {
     private Catalog catalog = null, catalog2 = null;
     //List<Section> dzialy = new ArrayList<>();
@@ -40,7 +42,10 @@ public class Library {
         catalog.addSubsection("Geografia", "Mapy");
         catalog.addSubsection("Asdfsa", "Asdw");
         catalog.editSection("Geografia", "Dupa");
-        catalog.replaceSection("Przyszłość", "Dupa");
+        catalog.replaceSection("Przyszłość", "Nie wiem");
+        catalog.replaceSection("Dupa", "Starożytność");
+        catalog.replaceSection("Książki", "Mapy");
+        catalog.replaceSection("Mapy", "Książki");
     }
 
     public void createTree2(String name, double bottomBorderId, double topBorderId) {
@@ -91,6 +96,40 @@ public class Library {
         }
     }
 
+    void saveCatalogToFile(String fileName, Catalog catalog) throws IOException {
+        PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, false)));
+
+        String indentation = "______", tabulation = "  ";
+        if (catalog.isEmpty()) {
+            System.out.println("\nkatalog jest pusty!!");
+        } else {
+            //System.out.println();
+            for (Section i : catalog) {
+                if (i.getName().equals("STOP")) break; //wyrzucenie działu: STOP, który został utworzony tylko dla zatrzymania iteracji
+                if (i.equals(catalog.getRoot())) {
+                    printWriter.println(i);
+                } else {
+                    if (i.getLevel() == 1) {
+                        tabulation = "  ";
+                        for (int j = 0; j < i.getLevel(); j++) {
+                            printWriter.print(tabulation);
+                        }
+                    } else {
+                        tabulation = "    ";
+                        for (int j = 0; j < i.getLevel(); j++) {
+                            printWriter.print(tabulation);
+                        }
+                    }
+                    printWriter.print("|");
+                    printWriter.print(indentation);
+                    printWriter.print(" " + i);
+                    printWriter.println("");
+                }
+            }
+            printWriter.println();
+        }
+        printWriter.close();
+    }
 
 
     public Catalog getTree() {

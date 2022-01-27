@@ -74,15 +74,17 @@ public class Catalog implements Iterable<Section> {
         Section section1 = searchSection(replaceSectionName);
         Section section2 = searchSection(targetSectionName);
 
-        if (section1 != null && section2 != null) {
+        if (section1 == null || section2 == null) {
+            System.out.println("\nWprowadzono niepoprawną nazwę działu!!!");
+        } else if(searchUnderSection(section1, section2)) {
+            System.out.println("Nie można przenieść działu, ponieważ dział docelowy zawiera się w przenoszonym dziale lub jest nim!!!");
+        } else {
             Section parentSection1 = section1.getParent();
             parentSection1.getChildren().remove(section1);
             section1.setParent(section2);
             section2.setChildren(section1);
             releveling(section1);
             System.out.println();
-        } else {
-            System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działuxd!!!");
         }
     }
 
@@ -90,7 +92,7 @@ public class Catalog implements Iterable<Section> {
         Section current = null;
         List<Section> currents = null;
 
-        boolean stopIteration = true, returnIteration = false, nextChildren = false;
+        boolean returnIteration = false;
 
         if((section.getLevel() - section.getParent().getLevel()) != 1) {
             section.setLevel(section.getParent().getLevel() + 1);
@@ -108,12 +110,10 @@ public class Catalog implements Iterable<Section> {
                 }
 
                 if (current.getChildren().size() > 0 && !returnIteration) { //wejście w kolejne dziecko od lewej
-                    nextChildren = false;
                     currents = current.getChildren();
                     current = currents.get(0);
                 } else if (currents.size() > 1 && !current.equals(currents.get(currents.size() - 1))) { //przejście na kolejne dzieckood lewej //current != currents.get(currents.size() - 1) to sprawdza, czy current nie jest już ostatnim elementem na liście, wtedy przechodzimy do rodzica
                     returnIteration = false;
-                    nextChildren = false;
                     int count = 0;
                     for (Section temp : currents) { //wyszukanie poprzedniej lokalizacji działu na podstawie pozycji rodzica
                         if (current.equals(temp)) {
@@ -129,6 +129,53 @@ public class Catalog implements Iterable<Section> {
                 }
             }
         }
+    }
+
+    /**
+     * funkcja wyszukuje dział section2 pod działem section1.
+     * @param sectionToSearch dział poniżej którego przeszukujemy
+     * @param sectionToLookFor szukany dział
+     * @return true jeśli znajdzie
+     */
+    public boolean searchUnderSection(Section sectionToSearch, Section sectionToLookFor) {
+        Section current = null;
+        List<Section> currents = null;
+
+        boolean returnIteration = false;
+
+        if(sectionToSearch.equals(sectionToLookFor)) {
+            return true;
+        }
+        current = sectionToSearch;
+        if (current.getChildren().size() > 0) {
+            currents = current.getChildren();
+            current = currents.get(0);
+
+            while (true) {
+                if (current.equals(sectionToSearch) && returnIteration) return false;
+                if (current.equals(sectionToLookFor)) return true;
+
+                if (current.getChildren().size() > 0 && !returnIteration) { //wejście w kolejne dziecko od lewej
+                    currents = current.getChildren();
+                    current = currents.get(0);
+                } else if (currents.size() > 1 && !current.equals(currents.get(currents.size() - 1))) { //przejście na kolejne dzieckood lewej //current != currents.get(currents.size() - 1) to sprawdza, czy current nie jest już ostatnim elementem na liście, wtedy przechodzimy do rodzica
+                    returnIteration = false;
+                    int count = 0;
+                    for (Section temp : currents) { //wyszukanie poprzedniej lokalizacji działu na podstawie pozycji rodzica
+                        if (current.equals(temp)) {
+                            current = currents.get(++count);         //przejście na kolejnego rodzica
+                            break;
+                        }
+                        count++;
+                    }
+                } else {               //powrót do rodzica
+                    current = current.getParent();
+                    currents = current.getParent().getChildren();
+                    returnIteration = true; // zmienna informuje, że current został przypisany do rodzica
+                }
+            }
+        }
+        return false;
     }
 
     //szukanie działu po nazwie
