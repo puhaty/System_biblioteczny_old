@@ -374,20 +374,16 @@ public class Catalog implements Iterable<Section> {
                         }
                     } else { //powrót do rodzica
                         if (current.getLevel() > 0) {
-                            if (current.getLevel() == 0) {
-                                //Section stop = new Section("STOP");
+                            current = current.getParent();
+                            if (current.equals(root)) {
                                 stopIteration = true;
                                 return null;
-                            } else {
-                                current = current.getParent();
-                                if (current.equals(root)) {
-                                    //Section stop = new Section("STOP");
-                                    stopIteration = true;
-                                    return null;
-                                }
-                                currents = current.getParent().getChildren();
-                                returnIteration = true;
                             }
+                            currents = current.getParent().getChildren();
+                            returnIteration = true;
+                            }
+                        else {
+                            stopIteration = true;
                         }
                     }
                 } else { //jeśli nie ma przypisania do current to bierzemy root'a
