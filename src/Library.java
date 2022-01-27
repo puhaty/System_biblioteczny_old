@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Library {
     private Catalog catalog = null, catalog2 = null;
@@ -131,8 +133,46 @@ public class Library {
         printWriter.close();
     }
 
+    List<String> readCatalogFromFileToList(String fileName) throws IOException {
+        BufferedReader bufferedReader = null;
+        List<String> listCatalogFromFile = null;
+        try {
+            bufferedReader = new BufferedReader(new FileReader(fileName));
+            listCatalogFromFile = new ArrayList<>();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                listCatalogFromFile.add(line);
+                //System.out.println(line);
+            }
+        }
+        catch (Exception e) {
+            System.err.println("Wystapil blad przy wczytywaniu danych");
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                bufferedReader.close();
+            }
+        }
+        return listCatalogFromFile;
+    }
 
-    public Catalog getTree() {
+    Catalog addToCatalogFromList() throws IOException {
+        List<String> list = readCatalogFromFileToList("catalog.txt");
+        Catalog catalog = null;
+        String root;
+
+        if (!list.isEmpty()) {
+            root = list.get(0);
+            catalog = new Catalog(root, 12,23);
+            return catalog;
+        }
+        else {
+            return null;
+        }
+    }
+
+
+    public Catalog getCatalog() {
         return catalog;
     }
 }
