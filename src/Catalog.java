@@ -331,9 +331,8 @@ public class Catalog implements Iterable<Section> {
      */
     class LibraryIterator implements Iterator<Section> {
 
-        private Section current = null;
+        private Section current = root;
         private List<Section> currents = null;
-        private int level = 0;
         private boolean stopIteration = false, returnIteration = false, nextChildren = false;
 
         @Override
@@ -344,7 +343,7 @@ public class Catalog implements Iterable<Section> {
             if (current != null) {
                 return !stopIteration;
             } else {
-                return true;
+                return false;
             }
         }
 
@@ -354,7 +353,7 @@ public class Catalog implements Iterable<Section> {
                 throw new NoSuchElementException();
             }
             while (true) {
-                if (current != null) {
+                if (!current.equals(root)) {
                     if (currents.size() > 0 && !returnIteration && !nextChildren) { //przejście przez listę dzieci
                         nextChildren = true;
                         return current;
@@ -362,7 +361,6 @@ public class Catalog implements Iterable<Section> {
                         nextChildren = false;
                         currents = current.getChildren();
                         current = currents.get(0);
-                        level++;
                     } else if (currents.size() > 1 && !current.equals(currents.get(currents.size() - 1))) {//Przejście na kolejnego rodzica
                         returnIteration = false;
                         nextChildren = false;
@@ -376,17 +374,16 @@ public class Catalog implements Iterable<Section> {
                         }
                     } else { //powrót do rodzica
                         if (current.getLevel() > 0) {
-                            level--;
                             if (current.getLevel() == 0) {
-                                Section stop = new Section("STOP");
+                                //Section stop = new Section("STOP");
                                 stopIteration = true;
-                                return stop;
+                                return null;
                             } else {
                                 current = current.getParent();
                                 if (current.equals(root)) {
-                                    Section stop = new Section("STOP");
+                                    //Section stop = new Section("STOP");
                                     stopIteration = true;
-                                    return stop;
+                                    return null;
                                 }
                                 currents = current.getParent().getChildren();
                                 returnIteration = true;
@@ -395,13 +392,11 @@ public class Catalog implements Iterable<Section> {
                     }
                 } else { //jeśli nie ma przypisania do current to bierzemy root'a
                     if (root.getChildren().size() > 0) {
-                        current = root;
+                        current = current.getChildren().get(0);
                         currents = current.getChildren();
-                        level++;
                         return root;
                     } else {
                         stopIteration = true;
-                        current = root;
                         return root;
                     }
                 }

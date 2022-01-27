@@ -59,9 +59,11 @@ public class Library {
     public void addNewBook(String sectionName, double isbn, String title, String author) {
         boolean ifAdded = false;
         for (Section i : catalog) {
-            if (i.getName().equals(sectionName)) {
-                i.addBook(sectionName, isbn, title, author);
-                ifAdded = true;
+            if (i != null) {
+                if (i.getName().equals(sectionName)) {
+                    i.addBook(sectionName, isbn, title, author);
+                    ifAdded = true;
+                }
             }
         }
         if (!ifAdded) System.out.println("nie ma takiego działu!!!");
@@ -74,7 +76,7 @@ public class Library {
         } else {
             System.out.println();
             for (Section i : catalog) {
-                if (i.getName().equals("STOP")) break; //wyrzucenie działu: STOP, który został utworzony tylko dla zatrzymania iteracji
+                if (i == null) break; //wyrzucenie działu: STOP, który został utworzony tylko dla zatrzymania iteracji
                 if (i.equals(catalog.getRoot())) {
                     System.out.println(i);
                 } else {
@@ -107,7 +109,7 @@ public class Library {
         } else {
             //System.out.println();
             for (Section i : catalog) {
-                if (i.getName().equals("STOP")) break; //wyrzucenie działu: STOP, który został utworzony tylko dla zatrzymania iteracji
+                if (i == null) break; //wyrzucenie działu: STOP, który został utworzony tylko dla zatrzymania iteracji
                 if (i.equals(catalog.getRoot())) {
                     printWriter.println(i);
                 } else {
