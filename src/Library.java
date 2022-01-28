@@ -350,6 +350,10 @@ public class Library {
             System.out.println("nie ma takiej książki w tym katalogu!!");
             return null;
         }
+
+    //void searchFilter() {
+    //
+    //    }
     }
 
 
