@@ -301,6 +301,56 @@ public class Library {
         }
     }
 
+    Book searchBookForAuthor(String author, Catalog catalog) {
+        for (Section s : catalog) {
+            for (Book b : s.getBooks()) {
+                if (b.getAuthor().equals(author)) {
+                    return b;
+                }
+                else {
+                    System.out.println("nie ma takiej książki w tym katalogu!!");
+                    return null;
+                }
+            }
+        }
+        System.out.println("nie ma takiej książki w tym katalogu!!");
+        return null;
+    }
+
+    Book searchBookForIsbn(long isbn, Catalog catalog) {
+        for (Section s : catalog) {
+            for (Book b : s.getBooks()) {
+                if (b.getIsbn() == isbn) {
+                    return b;
+                }
+                else {
+                    System.out.println("nie ma takiej książki w tym katalogu!!");
+                    return null;
+                }
+            }
+        }
+        System.out.println("nie ma takiej książki w tym katalogu!!");
+        return null;
+    }
+
+    Book searchBookForTittle(String tittle, Catalog catalog) {
+        for (Section s : catalog) {
+            for (Book b : s.getBooks()) {
+                if (b.getTitle().equals(tittle)) {
+                    return b;
+                }
+                else {
+                    System.out.println("nie ma takiej książki w tym katalogu!!");
+                    return null;
+                }
+            }
+        }
+        System.out.println("nie ma takiej książki w tym katalogu!!");
+        return null;
+    }
+
+
+
     public Catalog getCatalog() {
         return catalog;
     }

@@ -13,6 +13,22 @@ public class Book {
         this.author = author;
     }
 
+    public long getIsbn() {
+        return isbn;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
