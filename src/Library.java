@@ -301,52 +301,55 @@ public class Library {
         }
     }
 
-    Book searchBookForAuthor(String author, Catalog catalog) {
+    List<Book> searchBookForAuthor(String author, Catalog catalog) {
+        List<Book> list = new ArrayList<>();
         for (Section s : catalog) {
             for (Book b : s.getBooks()) {
                 if (b.getAuthor().equals(author)) {
-                    return b;
-                }
-                else {
-                    System.out.println("nie ma takiej książki w tym katalogu!!");
-                    return null;
+                    list.add(b);
                 }
             }
         }
-        System.out.println("nie ma takiej książki w tym katalogu!!");
-        return null;
+        if (!list.isEmpty()) {
+            return list;
+        } else {
+            System.out.println("nie ma takiej książki w tym katalogu!!");
+            return null;
+        }
     }
 
-    Book searchBookForIsbn(long isbn, Catalog catalog) {
+    List<Book> searchBookForIsbn(long isbn, Catalog catalog) {
+        List<Book> list = new ArrayList<>();
         for (Section s : catalog) {
             for (Book b : s.getBooks()) {
                 if (b.getIsbn() == isbn) {
-                    return b;
-                }
-                else {
-                    System.out.println("nie ma takiej książki w tym katalogu!!");
-                    return null;
+                    list.add(b);
                 }
             }
         }
-        System.out.println("nie ma takiej książki w tym katalogu!!");
-        return null;
+        if (!list.isEmpty()) {
+            return list;
+        } else {
+            System.out.println("nie ma takiej książki w tym katalogu!!");
+            return null;
+        }
     }
 
-    Book searchBookForTittle(String tittle, Catalog catalog) {
+    List<Book> searchBookForTittle(String tittle, Catalog catalog) {
+        List<Book> list = new ArrayList<>();
         for (Section s : catalog) {
             for (Book b : s.getBooks()) {
                 if (b.getTitle().equals(tittle)) {
-                    return b;
-                }
-                else {
-                    System.out.println("nie ma takiej książki w tym katalogu!!");
-                    return null;
+                    list.add(b);
                 }
             }
         }
-        System.out.println("nie ma takiej książki w tym katalogu!!");
-        return null;
+        if (!list.isEmpty()) {
+            return list;
+        } else {
+            System.out.println("nie ma takiej książki w tym katalogu!!");
+            return null;
+        }
     }
 
 
