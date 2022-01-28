@@ -158,8 +158,8 @@ public class Library {
         return listCatalogFromFile;
     }
 
-    Catalog addToCatalogFromList(String separator) throws IOException {
-        List<String> list = readCatalogFromFileToList("catalogToRead.txt");
+    Catalog addToCatalogFromList(String separator, String filename) throws IOException {
+        List<String> list = readCatalogFromFileToList(filename);
         Catalog catalog;
         List<String[]> arrayList;
         if (!list.isEmpty() && list.get(0).length() > 1) {
