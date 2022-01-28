@@ -64,6 +64,11 @@ public class Section {
                 Objects.equals(name, section.name);
     }
 
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(name, bottomBorrder, topBorrder);

@@ -25,4 +25,9 @@ public class Book {
     public int hashCode() {
         return Objects.hash(isbn, title, author, section);
     }
+
+    @Override
+    public String toString() {
+        return title + " : " + author;
+    }
 }

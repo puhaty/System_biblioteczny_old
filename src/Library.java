@@ -101,6 +101,56 @@ public class Library {
         }
     }
 
+    public void showCatalogStructureWithBooks(Catalog catalog) throws NullPointerException {
+        String indentation = "______", tabulation = "  ", sign = "* ";
+        if (catalog.isEmpty()) {
+            System.out.println("\nkatalog jest pusty!!");
+        } else {
+            System.out.println();
+            for (Section i : catalog) {
+                if (i == null) break; //wyrzucenie działu: STOP, który został utworzony tylko dla zatrzymania iteracji
+                if (i.equals(catalog.getRoot())) {
+                    System.out.println(i);
+                    for (Book b : i.getBooks()) {
+                        System.out.print(tabulation + tabulation + sign + b);
+                    }
+                } else {
+                    if (i.getLevel() == 1) {
+                        tabulation = "  ";
+                        for (int j = 0; j < i.getLevel(); j++) {
+                            System.out.print(tabulation);
+                        }
+                    } else {
+                        tabulation = "       ";
+                        for (int j = 0; j < i.getLevel(); j++) {
+                            System.out.print(tabulation);
+                        }
+                    }
+                    System.out.print("|");
+                    System.out.print(indentation);
+                    System.out.print(" " + i);
+                    for (Book b : i.getBooks()) {
+                        if (i.getLevel() == 1) {
+                            System.out.println();
+                            tabulation = "   ";
+                            for (int j = 0; j < i.getLevel(); j++) {
+                                System.out.print(tabulation);
+                            }
+                        } else {
+                            System.out.println();
+                            tabulation = "       ";
+                            for (int j = 0; j < i.getLevel(); j++) {
+                                System.out.print(tabulation);
+                            }
+                        }
+                        System.out.print(tabulation + sign + b);
+                    }
+                    System.out.println();
+                }
+            }
+        }
+    }
+
     void saveCatalogToFile(String fileName, Catalog catalog) throws IOException {
         PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, false)));
 
