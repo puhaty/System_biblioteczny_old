@@ -17,7 +17,7 @@ public class Section {
         //this.gornyZakres = gornyZakres;
     }
 
-    public void addBook(String sectionName, double isbn, String title, String author) {
+    public void addBook(String sectionName, long isbn, String title, String author) {
         Book book = new Book(sectionName, isbn, title, author);
         books.add(book);
     }

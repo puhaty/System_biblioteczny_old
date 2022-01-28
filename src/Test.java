@@ -12,5 +12,8 @@ public class Test{
         library.saveCatalogToFile("catalog.txt", library.getCatalog());
         Catalog catalog = library.addToCatalogFromList(":", "catalogToRead.txt");
         library.showCatalogStructure(catalog);
+        library.readBooksFromFileToList("booksToRead.txt");
+        library.addBooksFromList(";", "booksToRead.txt", library.getCatalog());
+        System.out.println();
     }
 }

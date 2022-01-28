@@ -1,12 +1,12 @@
 import java.util.Objects;
 
 public class Book {
-    private final double isbn;
+    private final long isbn;
     private final String title;
     private final String author;
     private final String section;
 
-    public Book(String sectionName, double isbn, String title, String author) {
+    public Book(String sectionName, long isbn, String title, String author) {
         this.section = sectionName;
         this.isbn = isbn;
         this.title = title;

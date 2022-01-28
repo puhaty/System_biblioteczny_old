@@ -26,6 +26,7 @@ public class Library {
         catalog.addSection("Poezja");
         catalog.addSection("Lektury");
         catalog.addSection("Psychologiczne");
+        catalog.addSection("Dramat");
             //pododdziały
         catalog.addSubsection("Książki", "Przygodowe");
         catalog.addSubsection("Obyczajowe", "Romanse");
@@ -56,7 +57,7 @@ public class Library {
 
     }
 
-    public void addNewBook(String sectionName, double isbn, String title, String author) {
+    public void addNewBook(String sectionName, long isbn, String title, String author) {
         boolean ifAdded = false;
         for (Section i : catalog) {
             if (i != null) {
@@ -191,6 +192,64 @@ public class Library {
         }
     }
 
+    List<String> readBooksFromFileToList(String fileName) throws IOException {
+        BufferedReader bufferedReader = null;
+        List<String> BooksListFromFile = null;
+        try {
+            bufferedReader = new BufferedReader(new FileReader(fileName));
+            BooksListFromFile = new ArrayList<>();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                BooksListFromFile.add(line);
+                //System.out.println(line);
+            }
+        }
+        catch (Exception e) {
+            System.err.println("Wystapil blad przy wczytywaniu danych");
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                bufferedReader.close();
+            }
+        }
+        return BooksListFromFile;
+    }
+
+    void addBooksFromList(String separator, String fileName, Catalog catalog) throws IOException {
+        List<String> list = readBooksFromFileToList(fileName);
+        List<String[]> arrayList;
+        if (!list.isEmpty() && list.get(0).length() > 1) {
+            arrayList = new ArrayList<>();
+            String sectionName = null, tittle = null, isbn = null, author = null;
+            for (String s : list) {
+                String[] strip = s.split(separator);
+                if (strip.length > 3) {
+                    for (String t : strip) {
+                        t = t.strip();
+                    }
+                    arrayList.add(strip);
+                }
+            }
+
+            for (String[] t : arrayList) {
+                if (t.length > 3) {
+                    sectionName = t[0];
+                    isbn = t[1];
+                    tittle = t[2];
+                    author = t[3];
+                    Section section = catalog.searchSection(sectionName);
+                    if (section != null) {
+                        section.addBook(sectionName, Long.parseLong(isbn), tittle, author);
+                    } else {
+                        System.out.println("niepoprawna nazwa działu, sprawdź czy dział znajduje się w katalogu");
+                    }
+
+                }
+            }
+        } else {
+            System.out.println("brak danych z pliku lub niepoprawne dane!!!");
+        }
+    }
 
     public Catalog getCatalog() {
         return catalog;
