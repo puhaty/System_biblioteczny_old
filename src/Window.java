@@ -1,3 +1,16 @@
+
+/*TODO:
+
+zapis catalogu do pliku
+przenesienie fukcji do odpowiednich bloków
+setDefaultCloseOperation - zeby nie zamykało się wszystko tylko wybrane okno
+zrobic zeby bylo ladnie (rozmiary przycisków, centering itp)
+ */
+
+
+
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,10 +24,15 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.Panel;
 
+
 public class Window extends Frame {
 
+    public EditFrame editFrame;
+    public SearchFrame searchFrame;
+
+
     public Window() throws FileNotFoundException {
-        super("dupa");
+        super("System Biblioteczny");
     }
 
     static ActionListener ac;
@@ -26,95 +44,53 @@ public class Window extends Frame {
             }
         });
 
-        Panel MainPanel = new Panel(new BorderLayout(50,10));
+        Panel MainPanel = new Panel(new GridLayout(5,1));
 
+
+        //tylko tekst "System Biblioteczny"
         Panel witaj = new Panel(new GridLayout(1,1));
         Label systembiblioteczny;
         witaj.add(systembiblioteczny = new Label("System Biblioteczny"));
 
 
-        Panel edycja = new Panel(new GridLayout(6,1));
+
+        Button edycja;
+
+        MainPanel.add(edycja = new Button("Edycja"));
+        edycja.addActionListener(ac = new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                try {
+                    editFrame = new EditFrame();
+                    editFrame.LaunchEditFrame();
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 
 
+        Button wyszukaj;
 
-        Button dodajDzial;
-        Button dodajKsiazke;
-        Button edytuIstniejacaKsiazke;
-        Button edytujIstniejacyDzial;
-        Button przeniesDzial;
-
-        edycja.add(dodajDzial = new Button("Dodaj Dział"));
-        dodajDzial.addActionListener(ac = new ActionListener() {
+        MainPanel.add(wyszukaj = new Button("Wyszukaj"));
+        wyszukaj.addActionListener(ac = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    searchFrame = new SearchFrame();
+                    searchFrame.LaunchSearchFrame();
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }
 
             }
         });
 
-        edycja.add(dodajKsiazke = new Button("Dodaj Książkę"));
-        dodajKsiazke.addActionListener(ac = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        edycja.add(edytujIstniejacyDzial = new Button("Edytuj istniejący dział"));
-        edytujIstniejacyDzial.addActionListener(ac = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        edycja.add(edytuIstniejacaKsiazke = new Button("Edytuj istniejącą książkę"));
-        edytuIstniejacaKsiazke.addActionListener(ac = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        edycja.add(przeniesDzial = new Button("Przenieś dział"));
-        przeniesDzial.addActionListener(ac = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        Panel wyszukaj = new Panel (new GridLayout(3,1));
-
-        Label Wyszukiwanie;
-
-        Label wyszukajKsiazke;
-        Label wyszukajDzial;
-        TextField wyszukanyDzial;
-        TextField wyszukanaKsiazka;
-
-
-        wyszukaj.add(wyszukajDzial = new Label("Wyszukaj Dział"));
-        wyszukaj.add(wyszukanyDzial = new TextField("",20));
-        wyszukaj.add(wyszukajKsiazke = new Label("Wyszukaj książkę"));
-        wyszukaj.add(wyszukanaKsiazka = new TextField("",20));
-
-        wyszukanyDzial.addActionListener(ac = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        wyszukanaKsiazka.addActionListener(ac = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        Panel niewiempoco = new Panel();
+        Panel niewiempoco = new Panel(new GridLayout(1,1));
 
 
         Panel opcjeNaKoniec = new Panel(new GridLayout(1,2));
+        opcjeNaKoniec.setPreferredSize(new Dimension(100,20));
 
         Button zapisz;
         Button wyjdz;
@@ -131,6 +107,7 @@ public class Window extends Frame {
         wyjdz.addActionListener(ac = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.exit(1);
 
             }
         });
@@ -146,8 +123,13 @@ public class Window extends Frame {
         setBackground(Color.LIGHT_GRAY);
         pack();
 
+        MainPanel.setPreferredSize(new Dimension(300,300));
+        setBounds((Toolkit.getDefaultToolkit().getScreenSize().width >> 1) - (getSize().width >> 1),
+                (Toolkit.getDefaultToolkit().getScreenSize().height >> 1) - (getSize().height >> 1), getSize().width, getSize().height);
+
         setBounds(500, 500, 700, 500);
         EventQueue.invokeLater(() -> setVisible(true));
+        setFont(new Font("Courier", Font.BOLD,10));
 
     }
 
