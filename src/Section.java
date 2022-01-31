@@ -18,8 +18,12 @@ public class Section {
     }
 
     public void addBook(String sectionName, long isbn, String title, String author) {
-        Book book = new Book(sectionName, isbn, title, author);
-        books.add(book);
+        if (String.valueOf(isbn).length() == 13) {
+            Book book = new Book(sectionName, isbn, title, author);
+            books.add(book);
+        } else {
+            System.out.println("nieprawidłowy numer isbn: " + isbn + "numer isbn musi mieć 13 cyfr");
+        }
     }
 
     public String getName() {
@@ -67,6 +71,17 @@ public class Section {
 
     public List<Book> getBooks() {
         return books;
+    }
+
+    public Book getBook(String tittle) {
+        if (books.size() > 0) {
+            for (Book b : books) {
+                if (b.getTitle().equals(tittle)) {
+                    return b;
+                }
+            }
+        }
+        return null;
     }
 
     @Override

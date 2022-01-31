@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Catalog implements Iterable<Section> {
     private Section root = null;
-    private final String name;
+    private String name;
     private List<Section> sections;
 
     /**
@@ -81,11 +81,11 @@ public class Catalog implements Iterable<Section> {
      * funkcja dodaje dziecko do wskazanego węzła
      * @param current - węzeł do którego będziemy dodawali
      * @param newChildren - nazwa dziecka które dodajemy
-     * @param depth - głębokość(poziom) drzewa
+     * @param level - głębokość(poziom) drzewa
      */
-    private void addChildren(Section current, Section newChildren, int depth) {
+    private void addChildren(Section current, Section newChildren, int level) {
         current.setChildren(newChildren);
-        newChildren.setLevel(depth + 1);
+        newChildren.setLevel(level + 1);
         for (int i = 0; i < current.getChildren().size(); i++) {
             current.getChildren().get(i).setParent(current);
         }
@@ -326,6 +326,10 @@ public class Catalog implements Iterable<Section> {
     }
 
     public String getName() { return name; }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public Iterator<Section> iterator() {
