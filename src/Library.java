@@ -8,8 +8,12 @@ public class Library {
     //List<Autor> autorzy = new ArrayList<>();
     //List<Tytul> tytuly = new ArrayList<>();
 
-    public void createTree(String name, double bottomBorderId, double topBorderId) {
-        Catalog catalog = new Catalog(name, bottomBorderId, topBorderId);
+    public void addCatalog(String catalogName) {
+        catalogs.add(new Catalog(catalogName));
+    }
+
+    public void createTree(String name) {
+        Catalog catalog = new Catalog(name);
         catalogs.add(catalog);
         catalog.addSection("Science fiction");
         catalog.addSection("Obyczajowe");
@@ -227,7 +231,7 @@ public class Library {
         List<String[]> arrayList;
         if (!list.isEmpty() && list.get(0).length() > 1) {
             arrayList = new ArrayList<>();
-            Catalog catalog = new Catalog(null, 0, 0);
+            Catalog catalog = new Catalog(null);
 
             for (String s : list) {
                 String[] strip = s.split(separator);
@@ -241,7 +245,7 @@ public class Library {
             for (String[] t : arrayList) {
                 if (t.length > 1) {
                     if (t[0].equals("root")) {
-                        catalog = new Catalog(t[1], 0, 0);
+                        catalog = new Catalog(t[1]);
                         catalogs.add(catalog);
                     } else {
                         catalog.addSubsection(t[0], t[1]);
@@ -339,7 +343,7 @@ public class Library {
                     isbn = t[1];
                     tittle = t[2];
                     author = t[3];
-                    Section section = catalog.searchSection(sectionName);
+                    Section section = catalog.getSection(sectionName);
                     if (section != null) {
                         section.addBook(sectionName, Long.parseLong(isbn), tittle, author);
                     } else {
@@ -450,7 +454,7 @@ public class Library {
     }
 
 
-    public void showCatalogs () {
+    public void showCatalogs() {
         if (catalogs.size() > 0) {
             for (Catalog c : catalogs) {
                 System.out.println(c);
@@ -458,5 +462,14 @@ public class Library {
         } else {
             System.out.println("brak katalogów");
         }
+    }
+
+    public boolean isCatalog(String catalogName) {
+        for (Catalog c : catalogs) {
+            if (c.getName().equals(catalogName)) {
+                return true;
+            } else { return false; }
+        }
+        return false;
     }
 }

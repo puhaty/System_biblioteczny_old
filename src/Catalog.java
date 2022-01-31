@@ -2,25 +2,20 @@ import java.util.*;
 
 public class Catalog implements Iterable<Section> {
     private Section root = null;
-    private String name;
-    private double bottomBorrderId = 0;
-    private double topBorderId = 0;
-
+    private final String name;
+    private List<Section> sections;
 
     /**
      *konstruktor drzewa
      * @param name - nazwa drzewa
-     * @param bottomBorrderId - początek zakresu drzewa
-     * @param topBorderId - koniec zakresu drzewa
      */
-    public Catalog(String name, double bottomBorrderId, double topBorderId) {
+    public Catalog(String name) {
         this.root = new Section(name);
         this.root.setParent(null);
         this.name = name;
-        this.bottomBorrderId = bottomBorrderId;
-        this.topBorderId = topBorderId;
+        this.sections = new ArrayList<>();
+        this.sections.add(root);
     }
-
 
     /**
      *funkcja dodaje główne działy do głównego węzła: root
@@ -30,6 +25,7 @@ public class Catalog implements Iterable<Section> {
         if (!isSection(name)) {
             Section newSection = new Section(name);
             addChildren(root, newSection, 0);
+            sections.add(newSection);
         } else {
             System.out.println("Dział o nazwie: " + name + " już istnieje");
         }
@@ -39,6 +35,7 @@ public class Catalog implements Iterable<Section> {
         if (!isSection(name)) {
             Section newSection = new Section(name);
             addChildren(root, newSection, 0);
+            sections.add(newSection);
         } else if (print){
             System.out.println("Dział o nazwie: " + name + " już istnieje");
         }
@@ -52,10 +49,11 @@ public class Catalog implements Iterable<Section> {
     public void addSubsection(String sectionName, String subsectionName) {
         if (!isSection(subsectionName)) {
             Section newSubsection = new Section(subsectionName);
-            Section tempSection = searchSection(sectionName);
-            if (tempSection != null) {
-                int level = tempSection.getLevel();
-                addChildren(tempSection, newSubsection, level);
+            Section SectionToAdd = getSection(sectionName);
+            if (SectionToAdd != null) {
+                int level = SectionToAdd.getLevel();
+                addChildren(SectionToAdd, newSubsection, level);
+                sections.add(newSubsection);
             } else {
                 System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu: " + sectionName + " : " + subsectionName + "!!!");
             }
@@ -67,7 +65,7 @@ public class Catalog implements Iterable<Section> {
     public void addSubsection(String sectionName, String subsectionName, boolean print) {
         if (!isSection(subsectionName)) {
             Section newSubsection = new Section(subsectionName);
-            Section tempSection = searchSection(sectionName);
+            Section tempSection = getSection(sectionName);
             if (tempSection != null) {
                 int level = tempSection.getLevel();
                 addChildren(tempSection, newSubsection, level);
@@ -94,7 +92,7 @@ public class Catalog implements Iterable<Section> {
     }
 
     public void editSection(String sectionName, String newSectionName) {
-        Section edit = searchSection(sectionName);
+        Section edit = getSection(sectionName);
         if (edit != null) {
             edit.setName(newSectionName);
         } else {
@@ -104,8 +102,8 @@ public class Catalog implements Iterable<Section> {
     }
 
     public void replaceSection(String replaceSectionName, String targetSectionName) throws NullPointerException{
-        Section section1 = searchSection(replaceSectionName);
-        Section section2 = searchSection(targetSectionName);
+        Section section1 = getSection(replaceSectionName);
+        Section section2 = getSection(targetSectionName);
 
         if (section1 == null || section2 == null) {
             System.out.println("\nWprowadzono niepoprawną nazwę działu!!!");
@@ -212,8 +210,16 @@ public class Catalog implements Iterable<Section> {
     }
 
     //szukanie działu po nazwie
-    public Section searchSection(String sectionName) throws NullPointerException {
-        Section current = root;
+    public Section getSection(String sectionName) throws NullPointerException {
+        if (sections.size() > 0) {
+            for (Section s : sections) {
+                if (s.getName().equals(sectionName)) {
+                    return s;
+                }
+            }
+        }
+        return null;
+        /*Section current = root;
         List<Section> currents = null;
         int level = 0;
         boolean stopIteration = true, returnIteration = false, nextChildren = false;
@@ -277,12 +283,22 @@ public class Catalog implements Iterable<Section> {
             if (!stopIteration) break;
         }
         return null;
+
+         */
     }
 
-
+    public void showSections() {
+        if (sections.size() > 0) {
+            for (Section s : sections) {
+                System.out.println(s);
+            }
+        } else {
+            System.out.println("Katalog nie zawiera działów");
+        }
+    }
 
     public boolean isSection(String sectionName) {
-        if (searchSection(sectionName) != null) {
+        if (getSection(sectionName) != null) {
             return true;
         } else {
             return false;
@@ -298,6 +314,10 @@ public class Catalog implements Iterable<Section> {
 
     public Section getRoot() {
         return root;
+    }
+
+    public List<Section> getSections() {
+        return sections;
     }
 
     @Override
