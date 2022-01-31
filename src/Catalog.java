@@ -27,8 +27,21 @@ public class Catalog implements Iterable<Section> {
      * @param name - nazwa dodawanego działu
      */
     public void addSection(String name) {
-        Section newSection = new Section(name);
-        addChildren(root, newSection, 0);
+        if (!isSection(name)) {
+            Section newSection = new Section(name);
+            addChildren(root, newSection, 0);
+        } else {
+            System.out.println("Dział o nazwie: " + name + " już istnieje");
+        }
+    }
+
+    public void addSection(String name, boolean print) {
+        if (!isSection(name)) {
+            Section newSection = new Section(name);
+            addChildren(root, newSection, 0);
+        } else if (print){
+            System.out.println("Dział o nazwie: " + name + " już istnieje");
+        }
     }
 
     /**
@@ -37,13 +50,32 @@ public class Catalog implements Iterable<Section> {
      * @param subsectionName - nazwa pododdziału
      */
     public void addSubsection(String sectionName, String subsectionName) {
-        Section newSubsection = new Section(subsectionName);
-        Section tempSection = searchSection(sectionName);
-        if (tempSection != null) {
-            int level = tempSection.getLevel();
-            addChildren(tempSection, newSubsection, level);
+        if (!isSection(subsectionName)) {
+            Section newSubsection = new Section(subsectionName);
+            Section tempSection = searchSection(sectionName);
+            if (tempSection != null) {
+                int level = tempSection.getLevel();
+                addChildren(tempSection, newSubsection, level);
+            } else {
+                System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu: " + sectionName + " : " + subsectionName + "!!!");
+            }
         } else {
-            System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu: " + sectionName + " : " + subsectionName + "!!!");
+            System.out.println("Dział o nazwie: " + subsectionName + " już istnieje");
+        }
+    }
+
+    public void addSubsection(String sectionName, String subsectionName, boolean print) {
+        if (!isSection(subsectionName)) {
+            Section newSubsection = new Section(subsectionName);
+            Section tempSection = searchSection(sectionName);
+            if (tempSection != null) {
+                int level = tempSection.getLevel();
+                addChildren(tempSection, newSubsection, level);
+            } else {
+                System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu: " + sectionName + " : " + subsectionName + "!!!");
+            }
+        } else if (print){
+            System.out.println("Dział o nazwie: " + subsectionName + " już istnieje");
         }
     }
 
@@ -192,10 +224,13 @@ public class Catalog implements Iterable<Section> {
             }
 
             if (current == root) {
-                currents = current.getChildren();
-
-                current = currents.get(0);
-                level++;
+                if (current.getChildren().size() > 0) {
+                    currents = current.getChildren();
+                    current = currents.get(0);
+                    level++;
+                } else {
+                    return null;
+                }
             }
             if (!isEmpty()) {
                 while (true) {
@@ -244,6 +279,16 @@ public class Catalog implements Iterable<Section> {
         return null;
     }
 
+
+
+    public boolean isSection(String sectionName) {
+        if (searchSection(sectionName) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * sprawdza czy jest drzewo jest puste
      */
@@ -256,9 +301,18 @@ public class Catalog implements Iterable<Section> {
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    public String getName() { return name; }
+
+    @Override
     public Iterator<Section> iterator() {
         return new LibraryIterator();
     }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Iterator po drzewie

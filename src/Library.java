@@ -3,21 +3,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
-    private Catalog catalog = null, catalog2 = null;
+    List<Catalog> catalogs = new ArrayList<>();
     //List<Section> dzialy = new ArrayList<>();
     //List<Autor> autorzy = new ArrayList<>();
     //List<Tytul> tytuly = new ArrayList<>();
 
-    public Library() {
-        this.catalog = null;
-    }
-
-    public Catalog getTree2() {
-        return catalog2;
-    }
-
     public void createTree(String name, double bottomBorderId, double topBorderId) {
-        catalog = new Catalog(name, bottomBorderId, topBorderId);
+        Catalog catalog = new Catalog(name, bottomBorderId, topBorderId);
+        catalogs.add(catalog);
         catalog.addSection("Science fiction");
         catalog.addSection("Obyczajowe");
         catalog.addSection("Kryminalne");
@@ -51,13 +44,7 @@ public class Library {
         catalog.replaceSection("Mapy", "Książki");
     }
 
-    public void createTree2(String name, double bottomBorderId, double topBorderId) {
-        catalog2 = new Catalog(name, bottomBorderId, topBorderId);
-        //tree2.addSection("xd");
-
-    }
-
-    public void addNewBook(String sectionName, long isbn, String title, String author) {
+    public void addNewBook(Catalog catalog, String sectionName, long isbn, String title, String author) {
         boolean ifAdded = false;
         for (Section i : catalog) {
             if (i != null) {
@@ -240,7 +227,7 @@ public class Library {
         List<String[]> arrayList;
         if (!list.isEmpty() && list.get(0).length() > 1) {
             arrayList = new ArrayList<>();
-            catalog = new Catalog(null, 0, 0);
+            Catalog catalog = new Catalog(null, 0, 0);
 
             for (String s : list) {
                 String[] strip = s.split(separator);
@@ -255,6 +242,7 @@ public class Library {
                 if (t.length > 1) {
                     if (t[0].equals("root")) {
                         catalog = new Catalog(t[1], 0, 0);
+                        catalogs.add(catalog);
                     } else {
                         catalog.addSubsection(t[0], t[1]);
                     }
@@ -289,10 +277,10 @@ public class Library {
                 arrayList.add(strip);
             }
 
-            if (arrayList.get(0)[0].equals("root") && arrayList.get(0)[1].equals(catalog.getRoot().getName())) {
+            if (arrayList.get(0)[0].equals("root") && arrayList.get(0)[1].equals(catalog.getName())) {
                 for (int i = 1; i < arrayList.size(); i++) {
                     if (arrayList.get(i).length > 1) {
-                        catalog.addSubsection(arrayList.get(i)[0], arrayList.get(i)[1]);
+                        catalog.addSubsection(arrayList.get(i)[0], arrayList.get(i)[1], false);
                     }
                 }
                 return catalog;
@@ -445,11 +433,26 @@ public class Library {
         }
     }
 
+    public List<Catalog> getCatalogs() {
+        return catalogs;
+    }
+
+    public Catalog getCatalog(String catalogName) {
+        for (Catalog c : catalogs) {
+            if (c.getName().equals(catalogName)) {
+                return c;
+            } else {
+                System.out.println("nie ma takiego katalogu");
+                return null;
+            }
+        }
+        return null;
+    }
 
 
-
-
-    public Catalog getCatalog() {
-        return catalog;
+    public void showCatalogs () {
+        for (Catalog c :catalogs) {
+            System.out.println(c);
+        }
     }
 }
