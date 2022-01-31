@@ -47,6 +47,7 @@ Lektury:Szkoła podstawowa
 Lektury:Liceum
 Liceum:Poziom podstawowy
 Liceum:Poziom rozszerzony
+Liceum:Dx
 Książki:Poezja
 Poezja:Sonet
 Poezja:Bajka

@@ -228,9 +228,15 @@ public class Library {
         return listCatalogFromFile;
     }
 
+    /**
+     * funkcja służy do wczytywania stanu katalogu z pliku i tworzenia nowego katalogu
+     * @param separator
+     * @param filename
+     * @return
+     * @throws IOException
+     */
     Catalog addToCatalogFromList(String separator, String filename) throws IOException {
         List<String> list = readCatalogFromFileToList(filename);
-        Catalog catalog;
         List<String[]> arrayList;
         if (!list.isEmpty() && list.get(0).length() > 1) {
             arrayList = new ArrayList<>();
@@ -258,6 +264,45 @@ public class Library {
         }
         else {
             return null;
+        }
+    }
+
+    /**
+     * funkcja służy do nadpisywania struktury istniejπącego katalogu na podstawie pliku
+     * @param separator
+     * @param filename
+     * @return
+     * @throws IOException
+     */
+    Catalog addToCatalogFromList(String separator, String filename, Catalog catalog) throws IOException {
+        List<String> list = readCatalogFromFileToList(filename);
+        List<String[]> arrayList;
+        if (!list.isEmpty() && list.get(0).length() > 1) {
+            arrayList = new ArrayList<>();
+
+            for (String s : list) {
+                String[] strip = s.split(separator);
+                if (strip.length > 1) {
+                    strip[0] = strip[0].strip();
+                    strip[1] = strip[1].strip();
+                }
+                arrayList.add(strip);
+            }
+
+            if (arrayList.get(0)[0].equals("root") && arrayList.get(0)[1].equals(catalog.getRoot().getName())) {
+                for (int i = 1; i < arrayList.size(); i++) {
+                    if (arrayList.get(i).length > 1) {
+                        catalog.addSubsection(arrayList.get(i)[0], arrayList.get(i)[1]);
+                    }
+                }
+                return catalog;
+            } else {
+                System.out.println("niepoprawny plik");
+                return catalog;
+            }
+        }
+        else {
+            return catalog;
         }
     }
 

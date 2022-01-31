@@ -14,8 +14,8 @@ public class Test{
         library.showCatalogStructure(catalog);
         catalog.addSubsection("Pieśń", "Xd");
         library.saveCatalogListToFile("catalog_list.txt", catalog);
-        Catalog catalog1 = library.addToCatalogFromList(":", "catalogToRead.txt");
-        library.showCatalogStructure(catalog1);
+        library.addToCatalogFromList(":", "catalogToRead.txt", catalog);
+        library.showCatalogStructure(catalog);
         //library.addBooksFromList(";", "booksToRead.txt", library.getCatalog());
         //library.showCatalogStructureWithBooks(library.getCatalog());
     }

@@ -21,6 +21,7 @@ public class Catalog implements Iterable<Section> {
         this.topBorderId = topBorderId;
     }
 
+
     /**
      *funkcja dodaje główne działy do głównego węzła: root
      * @param name - nazwa dodawanego działu

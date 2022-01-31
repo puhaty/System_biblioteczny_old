@@ -71,6 +71,7 @@ Historyczne:świat
 Przyrodnicze:Lasy
 Przyrodnicze:Ogrodnicze
 Pieśń:Xd
+Liceum:Dx
 
 
 
