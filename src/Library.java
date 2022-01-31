@@ -451,8 +451,12 @@ public class Library {
 
 
     public void showCatalogs () {
-        for (Catalog c :catalogs) {
-            System.out.println(c);
+        if (catalogs.size() > 0) {
+            for (Catalog c : catalogs) {
+                System.out.println(c);
+            }
+        } else {
+            System.out.println("brak katalogów");
         }
     }
 }

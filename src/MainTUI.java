@@ -27,10 +27,23 @@ public class MainTUI {
                 case "0":
                     println("Dziękujemy za poświęcony czas...\nDo zobaczenia!");
                 case "1":
+                    println("podaj nazwę katalogu:");
+                    library.showCatalogs();
+                    if(library.getCatalogs().size() > 0) {
+                        String catalogName = in.nextLine();
+                        library.showCatalogStructure(library.getCatalog(catalogName));
+                    }
                     break;
                 case "2":
+                    println("podaj nazwę katalogu:");
+                    library.showCatalogs();
+                    if(library.getCatalogs().size() > 0) {
+                        String catalogName = in.nextLine();
+                        library.showCatalogStructureWithBooks(library.getCatalog(catalogName));
+                    }
                     break;
                 case "3":
+
                     break;
                 case "4":
                     break;
