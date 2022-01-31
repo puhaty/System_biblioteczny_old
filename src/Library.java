@@ -151,7 +151,7 @@ public class Library {
         }
     }
 
-    void saveCatalogToFile(String fileName, Catalog catalog) throws IOException {
+    void saveCatalogStructureToFile(String fileName, Catalog catalog) throws IOException {
         PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, false)));
 
         String indentation = "______", tabulation = "  ";
@@ -182,6 +182,25 @@ public class Library {
                 }
             }
             printWriter.println();
+        }
+        printWriter.close();
+    }
+
+    void saveCatalogListToFile(String fileName, Catalog catalog) throws IOException {
+        PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, false)));
+
+        if (catalog.isEmpty()) {
+            System.out.println("\nkatalog jest pusty!!");
+        } else {
+            for (Section i : catalog) {
+                if (i == null) break;
+                if (i.equals(catalog.getRoot())) {
+                    printWriter.println("root" + ":" + i);
+                } else {
+
+                    printWriter.println(i.getParent() + ":" + i);
+                }
+            }
         }
         printWriter.close();
     }
@@ -231,7 +250,7 @@ public class Library {
                     if (t[0].equals("root")) {
                         catalog = new Catalog(t[1], 0, 0);
                     } else {
-                        catalog.addSubsection(t[1], t[0]);
+                        catalog.addSubsection(t[0], t[1]);
                     }
                 }
             }
@@ -350,11 +369,38 @@ public class Library {
             System.out.println("nie ma takiej książki w tym katalogu!!");
             return null;
         }
-
-    //void searchFilter() {
-    //
-    //     }
     }
+
+    void searchFilter(String filter, Catalog catalog) {
+        List<Book> filterBooks;
+        switch (filter) {
+            case "author" :
+                String author = "";
+                filterBooks = searchBookForAuthor(author, catalog);
+                for (Book book : filterBooks) {
+                    System.out.println(book);
+                }
+                break;
+            case "tittle" :
+                String tittle ="";
+                filterBooks = searchBookForTittle(tittle, catalog);
+                for (Book book : filterBooks) {
+                    System.out.println(book);
+                }
+                break;
+            case "isbn" :
+                long isbn = 0;
+                filterBooks = searchBookForIsbn(isbn, catalog);
+                for (Book book : filterBooks) {
+                    System.out.println(book);
+                }
+                break;
+            default:
+                System.out.println("niepoprawna opcja!!!");
+        }
+    }
+
+
 
 
 

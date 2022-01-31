@@ -42,7 +42,7 @@ public class Catalog implements Iterable<Section> {
             int level = tempSection.getLevel();
             addChildren(tempSection, newSubsection, level);
         } else {
-            System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu!!!");
+            System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu: " + sectionName + " : " + subsectionName + "!!!");
         }
     }
 
@@ -242,74 +242,6 @@ public class Catalog implements Iterable<Section> {
         }
         return null;
     }
-//
-//    /**
-//     * przeciążenie metody aby wyszukiwała po dziale
-//     * @param section
-//     * @return
-//     */
-//    public Section searchSection(Section section)  throws NullPointerException {
-//        Section current = root;
-//        List<Section> currents = null;
-//        int level = 0;
-//        boolean stopIteration = true, returnIteration = false, nextChildren = false;
-//
-//        while (current != null) {
-//            if(current.equals(section) && current == root) { //sprawddzanie i dodanie kolejnego poddodzialu, jesłi dodajemy do roota
-//                return current;
-//            }
-//
-//            if (current == root) {
-//                currents = current.getChildren();
-//                current = currents.get(0);
-//                level++;
-//            }
-//            if (!isEmpty()) {
-//                while (true) {
-//
-//                    if (currents.size() > 0 && !returnIteration && !nextChildren) {
-//                        nextChildren = true;
-//                        if (current.equals(section)) { //sprawddzanie i dodanie kolejnego poddodzialu
-//                            return current;
-//                        }
-//                    }
-//                    else if (current.getChildren().size() > 0 && !returnIteration) { //wejście w kolejne dziecko od lewej
-//                        nextChildren = false;
-//                        currents = current.getChildren();
-//                        current = currents.get(0);
-//                        level++;
-//                    }
-//                    else if (currents.size() > 1 && !current.equals(currents.get(currents.size() - 1))){ //przejście na kolejne dzieckood lewej //current != currents.get(currents.size() - 1) to sprawdza, czy current nie jest już ostatnim elementem na liście, wtedy przechodzimy do rodzica
-//                        returnIteration = false;
-//                        nextChildren = false;
-//                        int count = 0;
-//                        for (Section temp : currents) { //wyszukanie poprzedniej lokalizacji działu na podstawie pozycji rodzica
-//                            if (current.equals(temp)) {
-//                                current = currents.get(++count);         //przejście na kolejnego rodzica
-//                                break;
-//                            }
-//                            count++;
-//                        }
-//                    } else {               //powrót do rodzica
-//                        if (level > 0) {
-//                            level--;
-//                            if (level == 0) { //nic nie znaleziono
-//                                //System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu!!!");
-//                                stopIteration = false;
-//                                break;
-//                            } else {
-//                                current = current.getParent();
-//                                currents = current.getParent().getChildren();
-//                                returnIteration = true; // zmienna informuje, że current został przypisany do rodzica
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            if (!stopIteration) break;
-//        }
-//        return null;
-//    }
 
     /**
      * sprawdza czy jest drzewo jest puste
