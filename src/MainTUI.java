@@ -1,10 +1,11 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 
 public class MainTUI {
     private static final String tab = "    ";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Library library = new Library();
         Scanner in = new Scanner(System.in);
 
@@ -16,12 +17,12 @@ public class MainTUI {
         printlnTab("3 : Dodaj pozycję");     //Done
         printlnTab("4 : Edytuj pozycję");
         printlnTab("5 : Usuń pozycję");
-        printlnTab("6 : Zapis do pliku");
-        printlnTab("7 : Odczyt z pliku");
+        printlnTab("6 : Odczyt z pliku");
+        printlnTab("7 : Zapis do pliku");
         printlnTab("m : Pokaż menu");
 
         String option = null, catalogName = null, sectionName = null, subsectionName = null;
-        String tittle = null, author = null, isbn = null;
+        String tittle = null, author = null, isbn = null, fileName = null;
         Catalog catalog;
         Section section;
         Book book;
@@ -33,7 +34,7 @@ public class MainTUI {
                 case "0":
                     println("Dziękujemy za poświęcony czas...\nDo zobaczenia!");
                     break;
-                case "1":
+                case "1": //pokaż katalog
                     library.showCatalogs();
                     if(library.getCatalogs().size() > 0) {
                         println("podaj nazwę katalogu:");
@@ -46,7 +47,7 @@ public class MainTUI {
                     }
 
                     break;
-                case "2":
+                case "2": //pokaż katalog z książkami
                     library.showCatalogs();
                     if(library.getCatalogs().size() > 0) {
                         println("podaj nazwę katalogu:");
@@ -54,7 +55,7 @@ public class MainTUI {
                         library.showCatalogStructureWithBooks(library.getCatalog(catalogName));
                     }
                     break;
-                case "3":
+                case "3": //dodawanie
                     String option1 = null;
                     println("Opcje: ");
                     printlnTab("a : Dodaj katalog");
@@ -159,7 +160,7 @@ public class MainTUI {
                         }
                     } while (!(option1.equals("q")));
                     break;
-                case "4":
+                case "4": //edycja
                     String option2 = null;
                     println("Opcje: ");
                     printlnTab("a : Edytuj katalog");
@@ -341,7 +342,7 @@ public class MainTUI {
                         }
                     } while(!(option2.equals("q")));
                     break;
-                case "5":
+                case "5": //usuwanie
                     String option3 = null;
                     println("Opcje: ");
                     printlnTab("a : Usuń katalog");
@@ -429,9 +430,144 @@ public class MainTUI {
                         }
                     } while(!(option3.equals("q")));
                     break;
-                case "6":
+                case "6": //odczyt z pliku
+                    String option4 = null;
+                    println("Opcje: ");
+                    printlnTab("a : Odczyt pliku do istniejącego katalogu");
+                    printlnTab("b : Odczyt pliku i utworzenie nowego katalogu");
+                    printlnTab("c : Odczyt ksiązek z pliku i dodanie do istniejącego katalogu");
+                    printlnTab("m : menu");
+                    printlnTab("q : Powrót");
+                    do {
+                        print("\nwybierz opcję: ");
+                        option4 = in.nextLine();
+                        switch (option4) {
+                            case "a":
+                                println("Katalogi w bibliotece: ");
+                                library.showCatalogs();
+                                if(library.getCatalogs().size() > 0) {
+                                    println("podaj nazwę katalogu:");
+                                    catalogName = in.nextLine();
+                                    if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
+                                        println("podaj nazwę pliku: ");
+                                        fileName = in.nextLine();
+                                        library.addToCatalogFromList(":", fileName, catalog);
+                                    } else {
+                                        println("wprowadzono niepoprawną nazwę: " + catalogName);
+                                    }
+                                }
+                                break;
+                            case "b":
+                                println("podaj nazwę pliku: ");
+                                fileName = in.nextLine();
+                                library.addCatalog(library.addToCatalogFromList(":", fileName));
+                                break;
+                            case "c":
+                                println("Katalogi w bibliotece: ");
+                                library.showCatalogs();
+                                if(library.getCatalogs().size() > 0) {
+                                    println("podaj nazwę katalogu:");
+                                    catalogName = in.nextLine();
+                                    if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
+                                        println("podaj nazwę pliku: ");
+                                        fileName = in.nextLine();
+                                        library.addBooksFromList(":", fileName, catalog);
+                                    } else {
+                                        println("wprowadzono niepoprawną nazwę: " + catalogName);
+                                    }
+                                }
+                                break;
+                            case "m":
+                                println("Opcje: ");
+                                printlnTab("a : Odczyt pliku do istniejącego katalogu");
+                                printlnTab("b : Odczyt pliku i utworzenie nowego katalogu");
+                                printlnTab("c : Odczyt ksiązek z pliku i dodanie do istniejącego katalogu");
+                                printlnTab("m : menu");
+                                printlnTab("q : Powrót");
+                                break;
+                            case "q":
+                                break;
+                            default:
+                                println("niepoprawna opcja!");
+                        }
+                    } while (!(option4.equals("q")));
                     break;
-                case "7":
+                case "7": //zapis do pliku
+                    String option5 = null;
+                    println("Opcje: ");
+                    printlnTab("a : zapis struktury katalogu z książkami do pliku");
+                    printlnTab("b : zapis stanu katalogu do pliku(plik z separatorami)");
+                    printlnTab("c : zapis książek do pliku(z separatorami)");
+                    printlnTab("m : menu");
+                    printlnTab("q : Powrót");
+                    do {
+                        print("\nwybierz opcję: ");
+                        option5 = in.nextLine();
+                        switch (option5) {
+                            case "a":
+                                println("Katalogi w bibliotece: ");
+                                library.showCatalogs();
+                                if(library.getCatalogs().size() > 0) {
+                                    println("podaj nazwę katalogu:");
+                                    catalogName = in.nextLine();
+                                    if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
+                                        println("podaj nazwę pliku: ");
+                                        fileName = in.nextLine();
+                                        library.saveCatalogStructureWithBooksToFile(fileName, catalog);
+                                    } else {
+                                        println("wprowadzono niepoprawną nazwę: " + catalogName);
+                                    }
+                                }
+                                break;
+                            case "b":
+                                println("Katalogi w bibliotece: ");
+                                library.showCatalogs();
+                                if(library.getCatalogs().size() > 0) {
+                                    println("podaj nazwę katalogu:");
+                                    catalogName = in.nextLine();
+                                    if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
+                                        println("podaj nazwę pliku: ");
+                                        fileName = in.nextLine();
+                                        library.saveCatalogListToFile(fileName, catalog);
+                                    } else {
+                                        println("wprowadzono niepoprawną nazwę: " + catalogName);
+                                    }
+                                }
+                                break;
+                            case "c":
+                                println("Katalogi w bibliotece: ");
+                                library.showCatalogs();
+                                if(library.getCatalogs().size() > 0) {
+                                    println("podaj nazwę katalogu:");
+                                    catalogName = in.nextLine();
+                                    if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
+                                        println("podaj nazwę pliku: ");
+                                        fileName = in.nextLine();
+                                        library.saveBookListToFile(fileName, catalog);
+                                    } else {
+                                        println("wprowadzono niepoprawną nazwę: " + catalogName);
+                                    }
+                                }
+                                break;
+                            case "m":
+                                println("Opcje: ");
+                                printlnTab("a : zapis struktury katalogu z książkami do pliku");
+                                printlnTab("b : zapis stanu katalogu do pliku(plik z separatorami)");
+                                printlnTab("c : zapis książek do pliku(z separatorami)");
+                                printlnTab("m : menu");
+                                printlnTab("q : Powrót");
+                                break;
+                            case "q":
+                                break;
+                            default:
+                                println("niepoprawna opcja!");
+                        }
+                    } while (!(option5.equals("q")));
                     break;
                 case "m":
                     println("Menu:");
@@ -441,10 +577,9 @@ public class MainTUI {
                     printlnTab("3 : Dodaj pozycję");
                     printlnTab("4 : Edytuj pozycję");
                     printlnTab("5 : Usuń pozycję");
-                    printlnTab("6 : Zapisz do pliku");
-                    printlnTab("7 : Odczytaj z pliku");
+                    printlnTab("6 : Odczyt z pliku");
+                    printlnTab("7 : Zapis do pliku");
                     printlnTab("m : Pokaż menu");
-                    break;
                 default:
                     println("niepoprawna opcja");
             }

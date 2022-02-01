@@ -1,4 +1,4 @@
-Science fiction;1234567890123;Bohdan z zielonego wzgórza;Bohdan Mazur
+Science Fiction;1234567890123;Bohdan z zielonego wzgórza;Bohdan Mazur
 Dramat;1475628917634;Przygody Bohdana z Nextbike'a;Mateusz Hehłowski
 Kryminalne;8276394278936;Ukradzione części z nextbike'a;Karolina Marosz
 Nie wiem;8276394278936;części z nextbike'a;Karolina Marosz

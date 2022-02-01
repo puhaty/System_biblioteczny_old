@@ -12,6 +12,10 @@ public class Library {
         catalogs.add(new Catalog(catalogName));
     }
 
+    public void addCatalog(Catalog catalog) {
+        catalogs.add(catalog);
+    }
+
     public void removeCatalog(Catalog catalog) {
         if (catalogs.contains(catalog)) {
             catalogs.remove(catalog);
@@ -209,6 +213,60 @@ public class Library {
         printWriter.close();
     }
 
+    void saveCatalogStructureWithBooksToFile(String fileName, Catalog catalog) throws IOException {
+        PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, false)));
+
+        String indentation = "______", tabulation = "  ", sign = "* ";
+        if (catalog.isEmpty()) {
+            System.out.println("\nkatalog jest pusty!!");
+        } else {
+            //System.out.println();
+            for (Section i : catalog) {
+                if (i == null) break; //wyrzucenie działu: STOP, który został utworzony tylko dla zatrzymania iteracji
+                if (i.equals(catalog.getRoot())) {
+                    printWriter.println(i);
+                    for (Book b : i.getBooks()) {
+                        printWriter.println(tabulation + tabulation + sign + b);
+                    }
+                } else {
+                    if (i.getLevel() == 1) {
+                        tabulation = "  ";
+                        for (int j = 0; j < i.getLevel(); j++) {
+                            printWriter.print(tabulation);
+                        }
+                    } else {
+                        tabulation = "       ";
+                        for (int j = 0; j < i.getLevel(); j++) {
+                            printWriter.print(tabulation);
+                        }
+                    }
+                    printWriter.print("|");
+                    printWriter.print(indentation);
+                    printWriter.print(" " + i);
+                    for (Book b : i.getBooks()) {
+                        if (i.getLevel() == 1) {
+                            printWriter.println();
+                            tabulation = "   ";
+                            for (int j = 0; j < i.getLevel(); j++) {
+                                printWriter.print(tabulation);
+                            }
+                        } else {
+                            printWriter.println();
+                            tabulation = "       ";
+                            for (int j = 0; j < i.getLevel(); j++) {
+                                printWriter.print(tabulation);
+                            }
+                        }
+                        printWriter.println(tabulation + sign + b);
+                    }
+                    printWriter.println("");
+                }
+            }
+            printWriter.println();
+        }
+        printWriter.close();
+    }
+
     void saveCatalogListToFile(String fileName, Catalog catalog) throws IOException {
         PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, false)));
 
@@ -222,6 +280,25 @@ public class Library {
                 } else {
 
                     printWriter.println(i.getParent() + ":" + i);
+                }
+            }
+        }
+        printWriter.close();
+    }
+
+    public void saveBookListToFile(String fileName, Catalog catalog) throws IOException {
+        PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, false)));
+
+        if (catalog.isEmpty()) {
+            System.out.println("\nkatalog jest pusty!!");
+        } else {
+            for (Section s :catalog) {
+                if (s != null) {
+                    for (Book b : s.getBooks()) {
+                        printWriter.println(b.getSection() + ":" + b.getTitle() + ":" + b.getAuthor() + ":" + b.getIsbn());
+                    }
+                } else {
+                    break;
                 }
             }
         }
@@ -278,7 +355,7 @@ public class Library {
                 if (t.length > 1) {
                     if (t[0].equals("root")) {
                         catalog = new Catalog(t[1]);
-                        catalogs.add(catalog);
+                        //catalogs.add(catalog);
                     } else {
                         catalog.addSubsection(t[0], t[1]);
                     }
