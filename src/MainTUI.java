@@ -24,6 +24,7 @@ public class MainTUI {
         String tittle = null, author = null, isbn = null;
         Catalog catalog;
         Section section;
+        Book book;
 
         do {
             print("\npodaj opcję: ");
@@ -79,8 +80,9 @@ public class MainTUI {
                                     println("podaj nazwę katalogu:");
                                     catalogName = in.nextLine();
                                     if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
                                         print("podaj nazwę działu: ");
-                                        library.getCatalog(catalogName).addSection(in.nextLine());
+                                        catalog.addSection(in.nextLine());
                                     } else {
                                         println("wprowadzono niepoprawną nazwę: " + catalogName);
                                     }
@@ -149,7 +151,7 @@ public class MainTUI {
                                 printlnTab("b : Dodaj dział");
                                 printlnTab("c : Dodaj pododdział");
                                 printlnTab("d : Dodaj książkę");
-                                printlnTab("e : Pokaż menu");
+                                printlnTab("m : Pokaż menu");
                                 printlnTab("q : Powrót");
                                 break;
                             default:
@@ -200,16 +202,130 @@ public class MainTUI {
                                                 default:
                                                     println("niepoprawna opcja!");
                                             }
-                                        } while(!(option2.equals("q")));
+                                        } while(!(option3.equals("q")));
                                         break;
                                     } else {
                                         println("wprowadzono niepoprawną nazwę: " + catalogName);
                                     }
                                 }
                             case "b":
-
+                                println("Katalogi w bibliotece: ");
+                                library.showCatalogs();
+                                if(library.getCatalogs().size() > 0) {
+                                    println("podaj nazwę katalogu:");
+                                    catalogName = in.nextLine();
+                                    if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
+                                        println("Działy w katalogu: ");
+                                        catalog.showSections();
+                                        print("podaj nazwę działu: ");
+                                        sectionName = in.nextLine();
+                                        if (catalog.isSection(sectionName)) {
+                                            section = catalog.getSection(sectionName);
+                                            String option3 = null;
+                                            println("Opcje: ");
+                                            printlnTab("a : zmień nazwę");
+                                            printlnTab("b : przenieś dział");
+                                            printlnTab("m : menu");
+                                            printlnTab("q : Powrót");
+                                            do {
+                                                print("\nwybierz opcję: ");
+                                                option3 = in.nextLine();
+                                                switch (option3) {
+                                                    case "a":
+                                                        print("podaj nazwę: ");
+                                                        section.setName(in.nextLine());
+                                                        break;
+                                                    case "b":
+                                                        println("Działy w katalogu: ");
+                                                        catalog.showSections();
+                                                        print("podaj nazwę działu docelowego: ");
+                                                        String targetSectionName = in.nextLine();
+                                                        if (catalog.isSection(targetSectionName)) {
+                                                            catalog.replaceSection(subsectionName, targetSectionName);
+                                                        } else {
+                                                            println("wprowadzono niepoprawną nazwę: " + targetSectionName);
+                                                        }
+                                                        break;
+                                                    case "m":
+                                                        println("Opcje: ");
+                                                        printlnTab("a : zmień nazwę");
+                                                        printlnTab("b : przenieś dział");
+                                                        printlnTab("m : menu");
+                                                        printlnTab("q : Powrót");
+                                                        break;
+                                                    case "q":
+                                                        break;
+                                                    default:
+                                                        println("niepoprawna opcja!");
+                                                }
+                                            } while (!(option3.equals("q")));
+                                            break;
+                                        }  else {
+                                            println("wprowadzono niepoprawną nazwę: " + sectionName);
+                                        }
+                                    } else {
+                                        println("wprowadzono niepoprawną nazwę: " + catalogName);
+                                    }
+                                }
                                 break;
                             case "c":
+                                println("Katalogi w bibliotece: ");
+                                library.showCatalogs();
+                                if(library.getCatalogs().size() > 0) {
+                                    println("podaj nazwę katalogu:");
+                                    catalogName = in.nextLine();
+                                    if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
+                                        println("Książki w katalogu");
+                                        library.showBooks(catalog);
+                                        if (catalog.getBooks().size() > 0) {
+                                            print("podaj tytuł książki: ");
+                                            tittle = in.nextLine();
+                                            if (library.isBook(catalog, tittle)) {
+                                                book = library.getBook(catalog, tittle);
+                                                String option4 = null;
+                                                println("Opcje: ");
+                                                printlnTab("a : Przenieś książkę");
+                                                printlnTab("m : menu");
+                                                printlnTab("q : Powrót");
+                                                do {
+                                                    print("\nwybierz opcję: ");
+                                                    option4 = in.nextLine();
+                                                    switch (option4) {
+                                                        case "a":
+                                                            println("Działy w katalogu: ");
+                                                            library.showSections(catalog);
+                                                            print("podaj nazwę działu: ");
+                                                            sectionName = in.nextLine();
+                                                            if (library.isSection(catalog, sectionName)) {
+                                                                library.replaceBook(catalog, sectionName, tittle);
+                                                            } else {
+                                                                println("wprowadzono niepoprawną nazwę: " + sectionName);
+                                                            }
+                                                            break;
+
+                                                        case "m":
+                                                            println("Opcje: ");
+                                                            printlnTab("a : Przenieś książkę");
+                                                            printlnTab("m : menu");
+                                                            printlnTab("q : Powrót");
+                                                            break;
+                                                        case "q":
+                                                            break;
+                                                        default:
+                                                            println("niepoprawna opcja!");
+                                                    }
+                                                } while (!(option4.equals("q")));
+                                                break;
+                                            } else {
+                                                println("wprowadzono niepoprawną nazwę: " + tittle);
+                                            }
+                                        }
+                                    } else {
+                                        println("wprowadzono niepoprawną nazwę: " + catalogName);
+                                    }
+                                }
                                 break;
                             case "m":println("Opcje: ");
                                 printlnTab("a : Edytuj katalog");
@@ -226,6 +342,92 @@ public class MainTUI {
                     } while(!(option2.equals("q")));
                     break;
                 case "5":
+                    String option3 = null;
+                    println("Opcje: ");
+                    printlnTab("a : Usuń katalog");
+                    printlnTab("b : Usuń dział");
+                    printlnTab("c : Usuń książkę");
+                    printlnTab("m : Pokaż menu");
+                    printlnTab("q : Powrót");
+                    do {
+                        print("\nwybierz opcję: ");
+                        option3 = in.nextLine();
+                        switch (option3) {
+                            case "a":
+                                println("Katalogi w bibliotece: ");
+                                library.showCatalogs();
+                                if (library.getCatalogs().size() > 0) {
+                                    println("podaj nazwę katalogu:");
+                                    catalogName = in.nextLine();
+                                    if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
+                                        library.removeCatalog(catalog);
+                                    } else {
+                                        println("wprowadzono niepoprawną nazwę: " + catalogName);
+                                    }
+                                }
+                                break;
+                            case "b":
+                                println("Katalogi w bibliotece: ");
+                                library.showCatalogs();
+                                if (library.getCatalogs().size() > 0) {
+                                    println("podaj nazwę katalogu:");
+                                    catalogName = in.nextLine();
+                                    if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
+                                        println("Działy w katalogu: ");
+                                        library.showSections(catalog);
+                                        print("podaj nazwę działu: ");
+                                        sectionName = in.nextLine();
+                                        if (library.isSection(catalog, sectionName)) {
+                                            catalog.removeSection(sectionName);
+                                        } else {
+                                            println("wprowadzono niepoprawną nazwę: " + sectionName);
+                                        }
+                                    } else {
+                                        println("wprowadzono niepoprawną nazwę: " + catalogName);
+                                    }
+                                }
+                                break;
+                            case "c":
+                                println("Katalogi w bibliotece: ");
+                                library.showCatalogs();
+                                if (library.getCatalogs().size() > 0) {
+                                    println("podaj nazwę katalogu:");
+                                    catalogName = in.nextLine();
+                                    if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
+                                        println("Książki w katalogu");
+                                        library.showBooks(catalog);
+                                        if (catalog.getBooks().size() > 0) {
+                                            print("podaj tytuł książki: ");
+                                            tittle = in.nextLine();
+                                            if (library.isBook(catalog, tittle)) {
+                                                book = library.getBook(catalog, tittle);
+                                                library.removeBook(catalog, book);
+                                            } else {
+                                                println("wprowadzono niepoprawną nazwę: " + tittle);
+                                            }
+                                        }
+                                    } else {
+                                        println("wprowadzono niepoprawną nazwę: " + catalogName);
+                                    }
+                                }
+                                break;
+                            case "m":
+                                println("Opcje: ");
+                                printlnTab("a : Usuń katalog");
+                                printlnTab("b : Usuń dział");
+                                printlnTab("c : Usuń książkę");
+                                printlnTab("m : Pokaż menu");
+                                printlnTab("q : Powrót");
+                                break;
+                            case "q":
+                                break;
+                            default:
+                                println("niepoprawna opcja!");
+                        }
+                    } while(!(option3.equals("q")));
                     break;
                 case "6":
                     break;

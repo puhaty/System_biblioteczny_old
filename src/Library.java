@@ -12,6 +12,12 @@ public class Library {
         catalogs.add(new Catalog(catalogName));
     }
 
+    public void removeCatalog(Catalog catalog) {
+        if (catalogs.contains(catalog)) {
+            catalogs.remove(catalog);
+        }
+    }
+
     public void createTree(String name) {
         Catalog catalog = new Catalog(name);
         catalogs.add(catalog);
@@ -61,6 +67,32 @@ public class Library {
         if (!ifAdded) System.out.println("nie ma takiego działu!!!");
     }
 
+    public void replaceBook(Catalog catalog, String newSesctionName, String tittle) {
+        if (isBook(catalog, tittle)) {
+            if (isSection(catalog, newSesctionName)) {
+                Book book = getBook(catalog, tittle);
+                getSection(catalog, book.getSection()).removeBook(tittle);
+                book.setSection(newSesctionName);
+                getSection(catalog, newSesctionName).addBook(book);
+            }
+        }
+    }
+
+    public void removeBook(Catalog catalog, String tittle) {
+        if (isBook(catalog, tittle)) {
+            Book book = getBook(catalog, tittle);
+            Section section = getSection(catalog, book.getSection());
+            section.removeBook(book);
+        }
+    }
+
+    public void removeBook(Catalog catalog, Book book) {
+        if (isBook(catalog, book)) {
+            Section section = getSection(catalog, book.getSection());
+            section.removeBook(book);
+        }
+    }
+
     public void showCatalogStructure(Catalog catalog) throws NullPointerException {
         String indentation = "______", tabulation = "  ";
         if (catalog.isEmpty()) {
@@ -103,7 +135,7 @@ public class Library {
                 if (i.equals(catalog.getRoot())) {
                     System.out.println(i);
                     for (Book b : i.getBooks()) {
-                        System.out.print(tabulation + tabulation + sign + b);
+                        System.out.println(tabulation + tabulation + sign + b);
                     }
                 } else {
                     if (i.getLevel() == 1) {
@@ -134,7 +166,7 @@ public class Library {
                                 System.out.print(tabulation);
                             }
                         }
-                        System.out.print(tabulation + sign + b);
+                        System.out.println(tabulation + sign + b);
                     }
                     System.out.println();
                 }
@@ -357,6 +389,8 @@ public class Library {
         }
     }
 
+
+
     List<Book> searchBookForAuthor(String author, Catalog catalog) {
         List<Book> list = new ArrayList<>();
         for (Section s : catalog) {
@@ -469,6 +503,85 @@ public class Library {
             if (c.getName().equals(catalogName)) {
                 return true;
             } else { return false; }
+        }
+        return false;
+    }
+
+    public void showSections(Catalog catalog) {
+        for (Section s : catalog) {
+            if (s!= null) {
+                System.out.println(s);
+            }
+        }
+    }
+
+    public boolean isSection(Catalog catalog, String sectionName) {
+        for (Section s : catalog) {
+            if (s != null) {
+                if (s.getName().equals(sectionName)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Section getSection(Catalog catalog, String sectionName) {
+        for (Section s : catalog) {
+            if (s != null) {
+                if (s.getName().equals(sectionName)) {
+                    return s;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void showBooks(Catalog catalog) {
+        for (Section s : catalog) {
+            if (s != null) {
+                for (Book b : s.getBooks()) {
+                    System.out.println(b);
+                }
+            }
+        }
+    }
+
+    public Book getBook(Catalog catalog, String tittle) {
+        for (Section s :catalog) {
+            if (s != null) {
+                for (Book b : s.getBooks()) {
+                    if (b.getTitle().equals(tittle)) {
+                        return b;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean isBook(Catalog catalog, String tittle) {
+        for (Section s :catalog) {
+            if (s != null) {
+                for (Book b : s.getBooks()) {
+                    if (b.getTitle().equals(tittle)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isBook(Catalog catalog, Book book) {
+        for (Section s :catalog) {
+            if (s != null) {
+                for (Book b : s.getBooks()) {
+                    if (b.equals(book)) {
+                        return true;
+                    }
+                }
+            }
         }
         return false;
     }

@@ -4,7 +4,7 @@ public class Book {
     private final long isbn;
     private final String title;
     private final String author;
-    private final String section;
+    private String section;
 
     public Book(String sectionName, long isbn, String title, String author) {
         this.section = sectionName;
@@ -27,6 +27,10 @@ public class Book {
 
     public String getSection() {
         return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
     }
 
     @Override

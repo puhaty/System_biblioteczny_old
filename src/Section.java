@@ -4,17 +4,13 @@ import java.util.Objects;
 
 public class Section {
     private String name;
-    private double bottomBorrder;
-    private double topBorrder;
     private int level = 0;                  //zmienna level pokazuje poziom działu w strukturze drzewa
     private Section parent = null;
     private final List<Section> children = new ArrayList<>();
     private final List<Book> books = new ArrayList<>();
 
-    public Section(String name) {//, double dolnyZakres, double gornyZakres) {
+    public Section(String name) {
         this.name = name;
-        //this.dolnyZakres = dolnyZakres;
-        //this.gornyZakres = gornyZakres;
     }
 
     public void addBook(String sectionName, long isbn, String title, String author) {
@@ -23,6 +19,23 @@ public class Section {
             books.add(book);
         } else {
             System.out.println("nieprawidłowy numer isbn: " + isbn + "numer isbn musi mieć 13 cyfr");
+        }
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void removeBook(String tiitle) {
+        Book book = getBook(tiitle);
+        if (books.contains(book)) {
+            books.remove(book);
+        }
+    }
+
+    public void removeBook(Book book) {
+        if (books.contains(book)) {
+            books.remove(book);
         }
     }
 
@@ -58,17 +71,6 @@ public class Section {
         this.level = level;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Section section = (Section) o;
-        return Double.compare(section.bottomBorrder, bottomBorrder) == 0 &&
-                Double.compare(section.topBorrder, topBorrder) == 0 &&
-                Objects.equals(name, section.name);
-    }
-
-
     public List<Book> getBooks() {
         return books;
     }
@@ -85,12 +87,20 @@ public class Section {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(name, bottomBorrder, topBorrder);
+    public String toString() {
+        return name;
     }
 
     @Override
-    public String toString() {
-        return name;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Section section = (Section) o;
+        return level == section.level && name.equals(section.name) && parent.equals(section.parent) && children.equals(section.children) && books.equals(section.books);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, level, parent, children, books);
     }
 }

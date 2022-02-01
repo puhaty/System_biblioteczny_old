@@ -4,6 +4,7 @@ public class Catalog implements Iterable<Section> {
     private Section root = null;
     private String name;
     private List<Section> sections;
+    private List<Book> books;
 
     /**
      *konstruktor drzewa
@@ -14,6 +15,7 @@ public class Catalog implements Iterable<Section> {
         this.root.setParent(null);
         this.name = name;
         this.sections = new ArrayList<>();
+        this.books = new ArrayList<>();
         this.sections.add(root);
     }
 
@@ -25,7 +27,6 @@ public class Catalog implements Iterable<Section> {
         if (!isSection(name)) {
             Section newSection = new Section(name);
             addChildren(root, newSection, 0);
-            sections.add(newSection);
         } else {
             System.out.println("Dział o nazwie: " + name + " już istnieje");
         }
@@ -35,7 +36,6 @@ public class Catalog implements Iterable<Section> {
         if (!isSection(name)) {
             Section newSection = new Section(name);
             addChildren(root, newSection, 0);
-            sections.add(newSection);
         } else if (print){
             System.out.println("Dział o nazwie: " + name + " już istnieje");
         }
@@ -53,7 +53,6 @@ public class Catalog implements Iterable<Section> {
             if (SectionToAdd != null) {
                 int level = SectionToAdd.getLevel();
                 addChildren(SectionToAdd, newSubsection, level);
-                sections.add(newSubsection);
             } else {
                 System.out.println("\nWprowadzono Błędne dane, Nie ma takiego działu: " + sectionName + " : " + subsectionName + "!!!");
             }
@@ -77,6 +76,16 @@ public class Catalog implements Iterable<Section> {
         }
     }
 
+    public void removeSection(String sectionName) {
+        Section currentSection = getSection(sectionName);
+        if (currentSection != null && currentSection.getParent() != null) {
+            Section parentSecion = currentSection.getParent();
+            parentSecion.getChildren().remove(currentSection);
+        } else {
+            System.out.println("usuwanie się nie powiodło");
+        }
+    }
+
     /**
      * funkcja dodaje dziecko do wskazanego węzła
      * @param current - węzeł do którego będziemy dodawali
@@ -86,6 +95,7 @@ public class Catalog implements Iterable<Section> {
     private void addChildren(Section current, Section newChildren, int level) {
         current.setChildren(newChildren);
         newChildren.setLevel(level + 1);
+        sections.add(newChildren);
         for (int i = 0; i < current.getChildren().size(); i++) {
             current.getChildren().get(i).setParent(current);
         }
@@ -305,6 +315,41 @@ public class Catalog implements Iterable<Section> {
         }
     }
 
+    public void showBooks() {
+        for (Section s : sections) {
+            books.addAll(s.getBooks());
+        }
+        if (books.size() > 0) {
+            for (Book b : books) {
+                System.out.println(b);
+            }
+        } else {
+            System.out.println("Katalog nie zawiera książek");
+        }
+    }
+
+    public Book getBook(String tittle) {
+        for (Section s : sections) {
+            books.addAll(s.getBooks());
+        }
+        if (books.size() > 0) {
+            for (Book b : books) {
+                if (b.getTitle().equals(tittle)) {
+                    return b;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean isBook(String tittle) {
+        if (getBook(tittle) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * sprawdza czy jest drzewo jest puste
      */
@@ -329,6 +374,13 @@ public class Catalog implements Iterable<Section> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Book> getBooks() {
+        for (Section s : sections) {
+            books.addAll(s.getBooks());
+        }
+        return books;
     }
 
     @Override

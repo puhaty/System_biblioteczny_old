@@ -18,5 +18,9 @@ public class Test{
         library.showCatalogStructure(catalog);
         library.addBooksFromList(";", "booksToRead.txt", library.getCatalog("Książki1"));
         library.showCatalogStructureWithBooks(library.getCatalog("Książki1"));
+        library.showCatalogStructureWithBooks(catalog);
+        catalog.removeSection("Romans");
+        catalog.removeSection("Liceum");
+        library.showCatalogStructureWithBooks(catalog);
     }
 }
