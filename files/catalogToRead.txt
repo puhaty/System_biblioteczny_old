@@ -48,7 +48,6 @@ Romans:Fantastyczny
 Romans:Religijny
 Lektury:Szkoła podstawowa
 Lektury:Liceum
-Lektury:Liceum
 Liceum:Poziom podstawowy
 Lektury:Liceum
 Liceum:Poziom rozszerzony

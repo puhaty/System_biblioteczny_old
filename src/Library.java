@@ -171,7 +171,7 @@ public class Library {
                                 System.out.print(tabulation);
                             }
                         }
-                        System.out.println(tabulation + sign + b);
+                        System.out.print(tabulation + sign + b);
                     }
                     System.out.println();
                 }
