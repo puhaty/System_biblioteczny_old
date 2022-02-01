@@ -582,6 +582,8 @@ public class MainTUI {
                         option6 = in.nextLine();
                         switch (option6) {
                             case "a":
+                                println("Katalogi w bibliotece: ");
+                                library.showCatalogs();
                                 if(library.getCatalogs().size() > 0) {
                                     print("podaj nazwę katalogu:");
                                     catalogName = in.nextLine();
@@ -611,7 +613,7 @@ public class MainTUI {
                                                         print("podaj nazwę działu docelowego: ");
                                                         String targetSectionName = in.nextLine();
                                                         if (catalog.isSection(targetSectionName)) {
-                                                            catalog.replaceSection(subsectionName, targetSectionName);
+                                                            catalog.replaceSection(sectionName, targetSectionName);
                                                         } else {
                                                             println("wprowadzono niepoprawną nazwę: " + targetSectionName);
                                                         }
