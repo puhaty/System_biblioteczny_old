@@ -1,7 +1,5 @@
 Książki
   |______ Science Fiction
-      * Bohdan z zielonego wzgórza : Bohdan Mazur	isbn: 1234567890123
-
               |______ Twarde Science Fiction
               |______ Miękkie Science Fiction
   |______ Fantasy
@@ -11,8 +9,6 @@ Książki
               |______ Bajki
               |______ Fikcja o superbohaterach
   |______ Kryminalne
-      * Ukradzione części z nextbike'a : Karolina Marosz	isbn: 8276394278936
-
               |______ Whodunit
               |______ Locked room
               |______ Odcięcie od świata
@@ -43,8 +39,6 @@ Książki
   |______ Przygodowe
   |______ Biograficzne
   |______ Dramat
-      * Przygody Bohdana z Nextbike'a : Mateusz Hehłowski	isbn: 1475628917634
-
               |______ Tragedia
               |______ Komedia
               |______ melodramat
@@ -76,4 +70,5 @@ Książki
               |______ Ogrodnicze
   |______ Psychologiczne
   |______ Prawnicze
+  |______ fut
 
