@@ -8,19 +8,20 @@ public class Test{
         library.addNewBook(library.getCatalog("Książki1"), "Nie wiem", 87345, "Xddddddddd", "Mateusz Chechłowski");
         library.addNewBook(library.getCatalog("Książki1"), "xdddd", 87345, "Xddddddddd", "Mateusz Chechłowski");
         library.showCatalogStructureWithBooks(library.getCatalog("Książki1"));
-        library.saveCatalogListToFile("catalog1.txt", library.getCatalog("Książki1"));
-        library.saveCatalogStructureToFile("catalog2.txt", library.getCatalog("Książki1"));
-        Catalog catalog = library.addToCatalogFromList(":", "catalogToRead.txt");
+        library.saveCatalogListToFile("files/catalog1.txt", library.getCatalog("Książki1"));
+        library.saveCatalogStructureToFile("files/catalog2.txt", library.getCatalog("Książki1"));
+        Catalog catalog = library.addToCatalogFromList(":", "files/catalogToRead.txt");
         library.showCatalogStructure(catalog);
         catalog.addSubsection("Pieśń", "Xd");
-        library.saveCatalogListToFile("catalog_list.txt", catalog);
-        library.addToCatalogFromList(":", "catalogToRead.txt", catalog);
+        library.saveCatalogListToFile("files/catalog_list.txt", catalog);
+        library.addToCatalogFromList(":", "files/catalogToRead.txt", catalog);
         library.showCatalogStructure(catalog);
-        library.addBooksFromList(";", "booksToRead.txt", library.getCatalog("Książki1"));
+        library.addBooksFromList(";", "files/booksToRead.txt", library.getCatalog("Książki1"));
         library.showCatalogStructureWithBooks(library.getCatalog("Książki1"));
         library.showCatalogStructureWithBooks(catalog);
-        catalog.removeSection("Romans");
-        catalog.removeSection("Liceum");
+//        catalog.removeSection("Romans");
+//        catalog.removeSection("Liceum");
+        library.addBooksFromList(";", "files/booksToRead.txt", catalog);
         library.showCatalogStructureWithBooks(catalog);
     }
 }

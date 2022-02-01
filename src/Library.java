@@ -449,9 +449,9 @@ public class Library {
             for (String[] t : arrayList) {
                 if (t.length > 3) {
                     sectionName = t[0];
-                    isbn = t[1];
-                    tittle = t[2];
-                    author = t[3];
+                    tittle = t[1];
+                    author = t[2];
+                    isbn = t[3];
                     Section section = catalog.getSection(sectionName);
                     if (section != null) {
                         section.addBook(sectionName, Long.parseLong(isbn), tittle, author);

@@ -450,7 +450,7 @@ public class MainTUI {
                                     catalogName = in.nextLine();
                                     if (library.isCatalog(catalogName)) {
                                         catalog = library.getCatalog(catalogName);
-                                        println("podaj nazwę pliku: ");
+                                        println("Podaj ścieżkę do pliku: ");
                                         fileName = in.nextLine();
                                         library.addToCatalogFromList(":", fileName, catalog);
                                     } else {
@@ -459,7 +459,7 @@ public class MainTUI {
                                 }
                                 break;
                             case "b":
-                                println("podaj nazwę pliku: ");
+                                println("Podaj ścieżkę do pliku: ");
                                 fileName = in.nextLine();
                                 library.addCatalog(library.addToCatalogFromList(":", fileName));
                                 break;
@@ -471,7 +471,7 @@ public class MainTUI {
                                     catalogName = in.nextLine();
                                     if (library.isCatalog(catalogName)) {
                                         catalog = library.getCatalog(catalogName);
-                                        println("podaj nazwę pliku: ");
+                                        println("Podaj ścieżkę do pliku: ");
                                         fileName = in.nextLine();
                                         library.addBooksFromList(":", fileName, catalog);
                                     } else {
@@ -514,7 +514,7 @@ public class MainTUI {
                                     catalogName = in.nextLine();
                                     if (library.isCatalog(catalogName)) {
                                         catalog = library.getCatalog(catalogName);
-                                        println("podaj nazwę pliku: ");
+                                        println("Podaj ścieżkę do pliku: ");
                                         fileName = in.nextLine();
                                         library.saveCatalogStructureWithBooksToFile(fileName, catalog);
                                     } else {
@@ -530,7 +530,7 @@ public class MainTUI {
                                     catalogName = in.nextLine();
                                     if (library.isCatalog(catalogName)) {
                                         catalog = library.getCatalog(catalogName);
-                                        println("podaj nazwę pliku: ");
+                                        println("podaj ścieżkę do pliku: ");
                                         fileName = in.nextLine();
                                         library.saveCatalogListToFile(fileName, catalog);
                                     } else {
@@ -546,7 +546,7 @@ public class MainTUI {
                                     catalogName = in.nextLine();
                                     if (library.isCatalog(catalogName)) {
                                         catalog = library.getCatalog(catalogName);
-                                        println("podaj nazwę pliku: ");
+                                        println("Podaj ścieżkę do pliku: ");
                                         fileName = in.nextLine();
                                         library.saveBookListToFile(fileName, catalog);
                                     } else {
