@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Library {
     List<Catalog> catalogs = new ArrayList<>();
@@ -305,7 +306,7 @@ public class Library {
         printWriter.close();
     }
 
-    List<String> readCatalogFromFileToList(String fileName) throws IOException {
+    List<String> readCatalogFromFileToList(String fileName) throws IOException, FileNotFoundException {
         BufferedReader bufferedReader = null;
         List<String> listCatalogFromFile = null;
         try {
@@ -317,9 +318,9 @@ public class Library {
                 //System.out.println(line);
             }
         }
-        catch (Exception e) {
+        catch (IOException e) {
             System.err.println("Wystapil blad przy wczytywaniu danych");
-            e.printStackTrace();
+            //e.printStackTrace();
         } finally {
             if (bufferedReader != null) {
                 bufferedReader.close();
@@ -338,7 +339,7 @@ public class Library {
     Catalog addToCatalogFromList(String separator, String filename) throws IOException {
         List<String> list = readCatalogFromFileToList(filename);
         List<String[]> arrayList;
-        if (!list.isEmpty() && list.get(0).length() > 1) {
+        if (list != null && !list.isEmpty() && list.get(0).length() > 1) {
             arrayList = new ArrayList<>();
             Catalog catalog = new Catalog(null);
 
@@ -378,7 +379,7 @@ public class Library {
     Catalog addToCatalogFromList(String separator, String filename, Catalog catalog) throws IOException {
         List<String> list = readCatalogFromFileToList(filename);
         List<String[]> arrayList;
-        if (!list.isEmpty() && list.get(0).length() > 1) {
+        if (list != null && !list.isEmpty() && list.get(0).length() > 1) {
             arrayList = new ArrayList<>();
 
             for (String s : list) {
@@ -433,7 +434,7 @@ public class Library {
     void addBooksFromList(String separator, String fileName, Catalog catalog) throws IOException {
         List<String> list = readBooksFromFileToList(fileName);
         List<String[]> arrayList;
-        if (!list.isEmpty() && list.get(0).length() > 1) {
+        if (list != null && !list.isEmpty() && list.get(0).length() > 1) {
             arrayList = new ArrayList<>();
             String sectionName = null, tittle = null, isbn = null, author = null;
             for (String s : list) {
@@ -471,9 +472,11 @@ public class Library {
     List<Book> searchBookForAuthor(String author, Catalog catalog) {
         List<Book> list = new ArrayList<>();
         for (Section s : catalog) {
-            for (Book b : s.getBooks()) {
-                if (b.getAuthor().equals(author)) {
-                    list.add(b);
+            if (s != null) {
+                for (Book b : s.getBooks()) {
+                    if (b.getAuthor().equals(author)) {
+                        list.add(b);
+                    }
                 }
             }
         }
@@ -488,9 +491,11 @@ public class Library {
     List<Book> searchBookForIsbn(long isbn, Catalog catalog) {
         List<Book> list = new ArrayList<>();
         for (Section s : catalog) {
-            for (Book b : s.getBooks()) {
-                if (b.getIsbn() == isbn) {
-                    list.add(b);
+            if (s != null) {
+                for (Book b : s.getBooks()) {
+                    if (b.getIsbn() == isbn) {
+                        list.add(b);
+                    }
                 }
             }
         }
@@ -505,9 +510,11 @@ public class Library {
     List<Book> searchBookForTittle(String tittle, Catalog catalog) {
         List<Book> list = new ArrayList<>();
         for (Section s : catalog) {
-            for (Book b : s.getBooks()) {
-                if (b.getTitle().equals(tittle)) {
-                    list.add(b);
+            if (s != null) {
+                for (Book b : s.getBooks()) {
+                    if (b.getTitle().equals(tittle)) {
+                        list.add(b);
+                    }
                 }
             }
         }
@@ -521,26 +528,40 @@ public class Library {
 
     void searchFilter(String filter, Catalog catalog) {
         List<Book> filterBooks;
+        Scanner in = new Scanner(System.in);
         switch (filter) {
             case "author" :
-                String author = "";
+                System.out.print("podaj autora: ");
+                String author = in.nextLine();
                 filterBooks = searchBookForAuthor(author, catalog);
+                if (filterBooks != null){
                 for (Book book : filterBooks) {
                     System.out.println(book);
                 }
+            }
                 break;
             case "tittle" :
-                String tittle ="";
+                System.out.print("podaj tytuł: ");
+                String tittle = in.nextLine();
                 filterBooks = searchBookForTittle(tittle, catalog);
-                for (Book book : filterBooks) {
-                    System.out.println(book);
+                if (filterBooks != null) {
+                    for (Book book : filterBooks) {
+                        System.out.println(book);
+                    }
                 }
                 break;
             case "isbn" :
-                long isbn = 0;
-                filterBooks = searchBookForIsbn(isbn, catalog);
-                for (Book book : filterBooks) {
-                    System.out.println(book);
+                System.out.print("podaj nr ISBN: ");
+                String isbn = in.nextLine();
+                if (isbn.matches("[0-9]+") && isbn.length() == 13) {
+                    filterBooks = searchBookForIsbn(Long.parseLong(isbn), catalog);
+                    if (filterBooks != null) {
+                        for (Book book : filterBooks) {
+                            System.out.println(book);
+                        }
+                    }
+                } else {
+                    System.out.println("niepoprawny nr ISBN: " + isbn);
                 }
                 break;
             default:

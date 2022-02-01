@@ -23,5 +23,7 @@ public class Test{
 //        catalog.removeSection("Liceum");
         library.addBooksFromList(";", "files/booksToRead.txt", catalog);
         library.showCatalogStructureWithBooks(catalog);
+        catalog.replaceSection("Tren", "Komedia");
+        library.showCatalogStructure(catalog);
     }
 }
