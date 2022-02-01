@@ -6,14 +6,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-/*TODO dla Filipa <3
--generalnie uporządkować ładnie bloczki zeby jakos to wyglądało (i ich rozmiary!)
--zrobic tak zeby w oknie wyswietlal sie stan katalogu (np przy wyszukaniu działu)
--przeglądanie w miejscach gdzie wczytujemy dane z pliku (gdy wczytujemy plik zeby mozna było sobie wybrać a nie podawać sciezke) jest to w kom. w odp. miejscach
--ustawić proporcjonalne rozmiary przyciskow i pól tekstowych
--custom (czcionka itp)
--zaimplementowac funkcje usuwania ksiazek, usuwania dzialow, edycji istniejacej ksiązki (jesli Mati je dodał, jest 3:10 i poszedl spać XD)
- */
 
 
 public class Panels {
