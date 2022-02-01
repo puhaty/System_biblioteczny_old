@@ -582,39 +582,111 @@ public class MainTUI {
                         option6 = in.nextLine();
                         switch (option6) {
                             case "a":
-                                print("Podaj nazwę działu: ");
-                                sectionName = in.nextLine();
-
-                            case "b":
-                                println("Opcje: ");
-                                printlnTab("a : zmień nazwę");
-                                printlnTab("q : Powrót");
-                                do {
-                                    print("\nwybierz opcję: ");
-                                    option3 = in.nextLine();
-                                    switch (option3) {
-                                        case "a":
-                                            print("podaj nazwę: ");
-                                            library.getCatalog(catalogName).setName(in.nextLine());
-                                            break;
-                                        case "m":
+                                if(library.getCatalogs().size() > 0) {
+                                    print("podaj nazwę katalogu:");
+                                    catalogName = in.nextLine();
+                                    if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
+                                        print("podaj nazwę działu: ");
+                                        sectionName = in.nextLine();
+                                        if (library.isSection(catalog, sectionName)) {
+                                            section = library.getSection(catalog, sectionName);
+                                            String option7 = null;
                                             println("Opcje: ");
                                             printlnTab("a : zmień nazwę");
-                                            printlnTab("m : pokaż menu");
+                                            printlnTab("b : przenieś dział");
+                                            printlnTab("m : menu");
                                             printlnTab("q : Powrót");
+                                            do {
+                                                print("\nwybierz opcję: ");
+                                                option7 = in.nextLine();
+                                                switch (option7) {
+                                                    case "a":
+                                                        print("podaj nazwę: ");
+                                                        section.setName(in.nextLine());
+                                                        break;
+                                                    case "b":
+                                                        println("Działy w katalogu: ");
+                                                        catalog.showSections();
+                                                        print("podaj nazwę działu docelowego: ");
+                                                        String targetSectionName = in.nextLine();
+                                                        if (catalog.isSection(targetSectionName)) {
+                                                            catalog.replaceSection(subsectionName, targetSectionName);
+                                                        } else {
+                                                            println("wprowadzono niepoprawną nazwę: " + targetSectionName);
+                                                        }
+                                                        break;
+                                                    case "m":
+                                                        println("Opcje: ");
+                                                        printlnTab("a : zmień nazwę");
+                                                        printlnTab("b : przenieś dział");
+                                                        printlnTab("m : menu");
+                                                        printlnTab("q : Powrót");
+                                                        break;
+                                                    case "q":
+                                                        break;
+                                                    default:
+                                                        println("niepoprawna opcja!");
+                                                }
+                                            } while (!(option7.equals("q")));
                                             break;
-                                        case "q":
-                                            break;
-                                        default:
-                                            println("niepoprawna opcja!");
+                                        } else {
+                                            println("nie ma takiego działu: " + sectionName);
+                                        }
+                                    } else {
+                                        println("wprowadzono niepoprawną nazwę: " + catalogName);
                                     }
-                                } while(!(option3.equals("q")));
+                                }
+                            case "b":
+                                println("Katalogi w bibliotece: ");
+                                library.showCatalogs();
+                                if(library.getCatalogs().size() > 0) {
+                                    print("podaj nazwę katalogu:");
+                                    catalogName = in.nextLine();
+                                    if (library.isCatalog(catalogName)) {
+                                        catalog = library.getCatalog(catalogName);
+                                        String option8 = null;
+                                        println("Opcje: ");
+                                        printlnTab("a : wyszukaj po tytule");
+                                        printlnTab("b : Wyszukaj po autorze");
+                                        printlnTab("c : Wyszukaj po numerze isbn");
+                                        printlnTab("m : menu");
+                                        printlnTab("q : Powrót");
+                                        do {
+                                            print("\nwybierz opcję: ");
+                                            option8 = in.nextLine();
+                                            switch (option8) {
+                                                case "a":
+                                                    library.searchFilter("tittle", catalog);
+                                                    break;
+                                                case "b":
+                                                    library.searchFilter("author", catalog);
+                                                    break;
+                                                case "c":
+                                                    library.searchFilter("isbn", catalog);
+                                                    break;
+                                                case "m":
+                                                    println("Opcje: ");
+                                                    printlnTab("a : wyszukaj po tytule");
+                                                    printlnTab("b : Wyszukaj po autorze");
+                                                    printlnTab("c : Wyszukaj po numerze isbn");
+                                                    printlnTab("m : menu");
+                                                    printlnTab("q : Powrót");
+                                                    break;
+                                                case "q":
+                                                    break;
+                                                default:
+                                                    println("niepoprawna opcja!");
+                                            }
+                                        } while(!(option8.equals("q")));
+                                        break;
+                                    }
+                                }
                                 break;
                             case "m":
                                 println("Opcje: ");
-                                printlnTab("a : zapis struktury katalogu z książkami do pliku");
-                                printlnTab("b : zapis stanu katalogu do pliku(plik z separatorami)");
-                                printlnTab("c : zapis książek do pliku(z separatorami)");
+                                printlnTab("a : Wyszukaj dział");
+                                printlnTab("b : Wyszukaj książkę");
                                 printlnTab("m : menu");
                                 printlnTab("q : Powrót");
                                 break;
