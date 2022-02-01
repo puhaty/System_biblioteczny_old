@@ -19,6 +19,7 @@ public class MainTUI {
         printlnTab("5 : Usuń pozycję");
         printlnTab("6 : Odczyt z pliku");
         printlnTab("7 : Zapis do pliku");
+        printlnTab("8 : Wyszukaj pozycję");
         printlnTab("m : Pokaż menu");
 
         String option = null, catalogName = null, sectionName = null, subsectionName = null;
@@ -569,6 +570,61 @@ public class MainTUI {
                         }
                     } while (!(option5.equals("q")));
                     break;
+                case "8":
+                    String option6 = null;
+                    println("Opcje: ");
+                    printlnTab("a : Wyszukaj dział");
+                    printlnTab("b : Wyszukaj książkę");
+                    printlnTab("m : menu");
+                    printlnTab("q : Powrót");
+                    do {
+                        print("\nwybierz opcję: ");
+                        option6 = in.nextLine();
+                        switch (option6) {
+                            case "a":
+                                print("Podaj nazwę działu: ");
+                                sectionName = in.nextLine();
+
+                            case "b":
+                                println("Opcje: ");
+                                printlnTab("a : zmień nazwę");
+                                printlnTab("q : Powrót");
+                                do {
+                                    print("\nwybierz opcję: ");
+                                    option3 = in.nextLine();
+                                    switch (option3) {
+                                        case "a":
+                                            print("podaj nazwę: ");
+                                            library.getCatalog(catalogName).setName(in.nextLine());
+                                            break;
+                                        case "m":
+                                            println("Opcje: ");
+                                            printlnTab("a : zmień nazwę");
+                                            printlnTab("m : pokaż menu");
+                                            printlnTab("q : Powrót");
+                                            break;
+                                        case "q":
+                                            break;
+                                        default:
+                                            println("niepoprawna opcja!");
+                                    }
+                                } while(!(option3.equals("q")));
+                                break;
+                            case "m":
+                                println("Opcje: ");
+                                printlnTab("a : zapis struktury katalogu z książkami do pliku");
+                                printlnTab("b : zapis stanu katalogu do pliku(plik z separatorami)");
+                                printlnTab("c : zapis książek do pliku(z separatorami)");
+                                printlnTab("m : menu");
+                                printlnTab("q : Powrót");
+                                break;
+                            case "q":
+                                break;
+                            default:
+                                println("niepoprawna opcja!");
+                        }
+                    } while (!(option6.equals("q")));
+                    break;
                 case "m":
                     println("Menu:");
                     printlnTab("0 : Wyjdź z programu");
@@ -579,6 +635,7 @@ public class MainTUI {
                     printlnTab("5 : Usuń pozycję");
                     printlnTab("6 : Odczyt z pliku");
                     printlnTab("7 : Zapis do pliku");
+                    printlnTab("8 : Wyszukaj pozycję");
                     printlnTab("m : Pokaż menu");
                 default:
                     println("niepoprawna opcja");
