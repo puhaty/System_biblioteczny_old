@@ -180,6 +180,7 @@ public class Library {
     }
 
     void saveCatalogStructureToFile(String fileName, Catalog catalog) throws IOException {
+
         PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, false)));
 
         String indentation = "______", tabulation = "  ";
@@ -285,6 +286,7 @@ public class Library {
             }
         }
         printWriter.close();
+
     }
 
     public void saveBookListToFile(String fileName, Catalog catalog) throws IOException {
